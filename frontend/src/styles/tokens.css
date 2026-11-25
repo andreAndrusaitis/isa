@@ -1,0 +1,297 @@
+/* Design tokens. Os de marca saem de lib/brandTheme.ts (paleta gelo); brandTheme.test.ts garante que são iguais. */
+/* Nunca hardcodar cores no código — sempre usar estas variáveis */
+
+:root,
+[data-theme="light"] {
+  --font: 'Schibsted Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --sidebar-width: 226px;
+  --topbar-height: 60px;
+  --ticket-sidebar-width: 340px;
+
+  /* Breakpoints do sistema */
+  --bp-mobile-sm: 360px;
+  --bp-mobile:    480px;
+  --bp-tablet:    768px;
+  --bp-laptop-sm: 1024px;
+  --bp-laptop:    1240px;
+  --bp-desktop:   1440px;
+
+  /* Escala de espaçamento */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Tipografia */
+  --text-label: 12.5px;
+  --text-body-sm: 12.5px;
+  --text-body: 13.5px;
+  --text-body-lg: 14px;
+
+  /* Formas: superfícies retas; só o controle quebra a quina. */
+  --radius-xs: 0;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-full: 2px;
+  --field-line: var(--text-3);
+  --btn-tint: color-mix(in srgb, var(--accent) 11%, var(--bg-card));
+  --avatar-bg: color-mix(in srgb, var(--accent) 20%, var(--bg-card));
+  --avatar-ink: var(--text-1);
+  --card-border: 0;
+  --card-shadow: none;
+  --pop-shadow: 0 10px 30px var(--shadow-color);
+
+  /* Fundo de avatar com foto (PNG transparente) */
+  --avatar-img-bg: #ffffff;
+
+  /* Tokens de movimento (anime.js + CSS) */
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Marca (gerado a partir da paleta gelo) */
+  --bg-app: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f7fa;
+  --bg-topbar: #f1f7fa;
+  --bg-elevated: #f1f7fa;
+  --bg-input: #f1f7fa;
+  --bg-table-head: #ffffff;
+  --bg-panel: #f1f7fa;
+  --tint: #f1f7fa;
+  --rule: #0b2332;
+  --border: #d4dde3;
+  --border-strong: #b9c8d0;
+  --text-1: #0b2332;
+  --text-2: #4f616b;
+  --text-3: #637078;
+  --hover-overlay: color-mix(in srgb, #0b2332 4%, transparent);
+  --navy-900: #0b2332;
+  --navy-800: #0b2d41;
+  --navy-700: #0c3852;
+  --navy-600: #0d4b6f;
+  --accent: #0f73ac;
+  --accent-fg: #0f73ac;
+  --on-accent: #ffffff;
+  --accent-soft: color-mix(in srgb, #0f73ac 9%, transparent);
+  --accent-border: color-mix(in srgb, #0f73ac 45%, transparent);
+  --accent-ring: color-mix(in srgb, #0f73ac 28%, transparent);
+  --active-overlay: color-mix(in srgb, #0f73ac 9%, transparent);
+  --blue-700: #0f73ac;
+  --blue-600: #0f73ac;
+  --blue-fg: #0f73ac;
+  --blue-border: color-mix(in srgb, #0f73ac 45%, transparent);
+  --accent-light: #38bdf8;
+  --blue-500: #0f73ac;
+  --blue-400: #579dc5;
+  --blue-100: #e0edf4;
+  --blue-50: #eef5f9;
+  --logo-base: #084060;
+  --logo-accent: #38bdf8;
+  --scrim: color-mix(in srgb, #0b2332 55%, transparent);
+  --shadow-color: color-mix(in srgb, #0b2332 14%, transparent);
+  --bg-sidebar: #0b1b27;
+  --sidebar-text: #ced1d4;
+  --sidebar-muted: #999fa4;
+  --sidebar-strong: #ffffff;
+  --sidebar-accent: #38bdf8;
+  --sidebar-active: color-mix(in srgb, #38bdf8 16%, transparent);
+  --sidebar-hover: color-mix(in srgb, #ffffff 7%, transparent);
+  --sidebar-border: color-mix(in srgb, #ffffff 12%, transparent);
+  --login-bg: #0b1b27;
+  --login-glow: #1a526e;
+  --login-deep: #071219;
+  --login-title: #ffffff;
+  --login-accent: #38bdf8;
+  --login-text: #acb1b6;
+  --login-card: color-mix(in srgb, #ffffff 6%, transparent);
+  --login-card-border: color-mix(in srgb, #ffffff 13%, transparent);
+
+  /* Semânticas: não seguem a cor da organização. Barro, ocre, pinho e ardósia. */
+  --crit: #b3402a;
+  --crit-fg: #a83a25;
+  --crit-text: var(--crit-fg);
+  --crit-light: color-mix(in srgb, #b3402a 9%, transparent);
+  --crit-border: color-mix(in srgb, #b3402a 38%, transparent);
+  --warn: #a8761b;
+  --warn-fg: #80580c;
+  --warn-text: var(--warn-fg);
+  --warn-light: color-mix(in srgb, #a8761b 9%, transparent);
+  --warn-border: color-mix(in srgb, #a8761b 38%, transparent);
+  --note: #c79a3f;
+  --note-fg: #80580c;
+  --note-text: var(--note-fg);
+  --note-light: color-mix(in srgb, #c79a3f 9%, transparent);
+  --note-border: color-mix(in srgb, #c79a3f 38%, transparent);
+  --ok: #3a7f6b;
+  --ok-fg: #2a6a57;
+  --ok-text: var(--ok-fg);
+  --ok-light: color-mix(in srgb, #3a7f6b 9%, transparent);
+  --ok-border: color-mix(in srgb, #3a7f6b 38%, transparent);
+  --alt: #5a6d9c;
+  --alt-fg: #465a86;
+  --alt-text: var(--alt-fg);
+  --alt-light: color-mix(in srgb, #5a6d9c 9%, transparent);
+  --alt-border: color-mix(in srgb, #5a6d9c 38%, transparent);
+  --danger: var(--crit-fg);
+  --danger-soft: var(--crit-light);
+  --color-danger: var(--crit-fg);
+  --red: var(--crit);
+  --red-light: var(--crit-light);
+  --success: var(--ok-fg);
+  --ok-500: var(--ok-fg);
+  --warning: var(--warn-fg);
+  --code-bg: #10212c;
+  --code-text: #b9dcef;
+  --info: var(--accent-fg);
+  --primary: var(--accent);
+  --bg-main: var(--bg-app);
+}
+
+[data-theme="dark"] {
+  --avatar-img-bg: #000000;
+
+  /* Marca (gerado a partir da paleta gelo) */
+  --bg-app: #0f1f2a;
+  --bg-card: #0f1f2a;
+  --bg-card-hover: #1c2b36;
+  --bg-topbar: #09131a;
+  --bg-elevated: #1c2b36;
+  --bg-input: #1c2b36;
+  --bg-table-head: #0f1f2a;
+  --bg-panel: #09131a;
+  --tint: #1c2b36;
+  --rule: #939a9f;
+  --border: color-mix(in srgb, #cfe3ee 11%, transparent);
+  --border-strong: color-mix(in srgb, #cfe3ee 19%, transparent);
+  --text-1: #ecf4f8;
+  --text-2: #a4aaae;
+  --text-3: #8c9399;
+  --hover-overlay: rgba(255, 255, 255, 0.035);
+  --navy-900: #070f15;
+  --navy-800: #192833;
+  --navy-700: #25333d;
+  --navy-600: #35434c;
+  --accent: #3f8fbd;
+  --accent-fg: #6fabcd;
+  --on-accent: #09141a;
+  --accent-soft: color-mix(in srgb, #3f8fbd 9%, transparent);
+  --accent-border: color-mix(in srgb, #3f8fbd 45%, transparent);
+  --accent-ring: color-mix(in srgb, #3f8fbd 28%, transparent);
+  --active-overlay: color-mix(in srgb, #3f8fbd 9%, transparent);
+  --blue-700: #3f8fbd;
+  --blue-600: #3f8fbd;
+  --blue-fg: #6fabcd;
+  --blue-border: color-mix(in srgb, #3f8fbd 45%, transparent);
+  --accent-light: #38bdf8;
+  --blue-500: #3f8fbd;
+  --blue-400: #65a5ca;
+  --blue-100: color-mix(in srgb, #3f8fbd 16%, transparent);
+  --blue-50: color-mix(in srgb, #3f8fbd 12%, transparent);
+  --logo-base: #ffffff;
+  --logo-accent: #38bdf8;
+  --scrim: rgba(0, 0, 0, 0.62);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --bg-sidebar: #0b1b27;
+  --sidebar-text: #ced1d4;
+  --sidebar-muted: #999fa4;
+  --sidebar-strong: #ffffff;
+  --sidebar-accent: #38bdf8;
+  --sidebar-active: color-mix(in srgb, #38bdf8 16%, transparent);
+  --sidebar-hover: color-mix(in srgb, #ffffff 7%, transparent);
+  --sidebar-border: color-mix(in srgb, #ffffff 12%, transparent);
+  --login-bg: #0b1b27;
+  --login-glow: #1a526e;
+  --login-deep: #071219;
+  --login-title: #ffffff;
+  --login-accent: #38bdf8;
+  --login-text: #acb1b6;
+  --login-card: color-mix(in srgb, #ffffff 6%, transparent);
+  --login-card-border: color-mix(in srgb, #ffffff 13%, transparent);
+
+  --crit: #d97862;
+  --crit-fg: #ec9c88;
+  --crit-text: var(--crit-fg);
+  --crit-light: color-mix(in srgb, #d97862 9%, transparent);
+  --crit-border: color-mix(in srgb, #d97862 38%, transparent);
+  --warn: #c9a04a;
+  --warn-fg: #dcb968;
+  --warn-text: var(--warn-fg);
+  --warn-light: color-mix(in srgb, #c9a04a 9%, transparent);
+  --warn-border: color-mix(in srgb, #c9a04a 38%, transparent);
+  --note: #d9bd78;
+  --note-fg: #dcb968;
+  --note-text: var(--note-fg);
+  --note-light: color-mix(in srgb, #d9bd78 9%, transparent);
+  --note-border: color-mix(in srgb, #d9bd78 38%, transparent);
+  --ok: #63a892;
+  --ok-fg: #86c4af;
+  --ok-text: var(--ok-fg);
+  --ok-light: color-mix(in srgb, #63a892 9%, transparent);
+  --ok-border: color-mix(in srgb, #63a892 38%, transparent);
+  --alt: #8a9ccb;
+  --alt-fg: #aebce2;
+  --alt-text: var(--alt-fg);
+  --alt-light: color-mix(in srgb, #8a9ccb 9%, transparent);
+  --alt-border: color-mix(in srgb, #8a9ccb 38%, transparent);
+  --danger: var(--crit-fg);
+  --danger-soft: var(--crit-light);
+  --color-danger: var(--crit-fg);
+  --red: var(--crit);
+  --red-light: var(--crit-light);
+  --success: var(--ok-fg);
+  --ok-500: var(--ok-fg);
+  --warning: var(--warn-fg);
+}
+
+/* Alto contraste (tema "contrast" do Teams, ver teams/teamsTheme.ts): superfícies
+   pretas, texto branco, bordas sólidas e accent que passa 4.5:1 tanto como texto
+   sobre o preto quanto como fundo de texto branco. */
+[data-theme="dark"][data-contrast="more"] {
+  --bg-app:        #000000;
+  --bg-sidebar:    #000000;
+  --bg-card:       #000000;
+  --bg-card-hover: #1a1a1a;
+  --bg-topbar:     #000000;
+  --bg-elevated:   #0d0d0d;
+  --bg-input:      #000000;
+  --bg-table-head: #000000;
+
+  --border:        #c8c8c8;
+  --border-strong: #ffffff;
+  --rule:          #ffffff;
+  --tint:          #0d0d0d;
+  --bg-panel:      #000000;
+
+  --accent:       #2e70e6;
+  --accent-light: #2e70e6;
+  --accent-fg:    #8ab4ff;
+  --on-accent:    #ffffff;
+  --sidebar-text: #ffffff;
+  --sidebar-muted: #d6d6d6;
+  --sidebar-strong: #ffffff;
+  --sidebar-accent: #ffff00;
+  --sidebar-active: rgba(255,255,0,0.18);
+  --sidebar-hover: rgba(255,255,255,0.12);
+  --sidebar-border: #c8c8c8;
+
+  --text-1: #ffffff;
+  --text-2: #f0f0f0;
+  --text-3: #d6d6d6;
+
+  --hover-overlay:  rgba(255,255,255,0.12);
+  --active-overlay: rgba(255,255,0,0.18);
+}
+
+/* Margem das telas: a mesma do PageHeader, para título e conteúdo ficarem na mesma linha. */
+:root { --page-gutter: 28px; }
+@media (max-width: 768px) {
+  :root { --page-gutter: 16px; }
+}

@@ -1,0 +1,354 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevenção de quebra de layout por strings longas contínuas sem espaço */
+p, span, div, h1, h2, h3, h4, h5, h6, td, th, label, a, code {
+  overflow-wrap: break-word;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font);
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+}
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Alto contraste: foco amarelo (≥3:1 sobre o preto) em todo controle */
+[data-contrast="more"] *:focus-visible {
+  outline: 2px solid #ffff00;
+  outline-offset: 2px;
+}
+[data-contrast="more"] a { text-decoration: underline; }
+
+.email-log-row { transition: background 120ms; }
+.email-log-row:hover { background: var(--bg-elevated); }
+.email-log-row:focus-visible { outline-offset: -2px; }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+
+[data-theme="dark"] option { background: var(--bg-card); color: var(--text-1); }
+/* Controles nativos (ícone de calendário, seletor de data, rolagem) no tom do tema — sem isto o ícone some no escuro. */
+[data-theme="dark"] { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+[data-theme="light"] option { background: var(--bg-card); color: var(--text-1); }
+
+/* ── Message Notification Popup ─────────────────────────────────────────── */
+
+/* Não lidas: na aba de conversa e na lista de chamados */
+.chat-tab-unread { margin-left: 6px; color: var(--danger); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ticket-unread-count { flex-shrink: 0; color: var(--accent-fg); font-size: 12.5px; font-weight: 600; }
+
+/* ── Login: formulário à esquerda, painel da marca à direita ──────────── */
+
+.login-page { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); background: var(--bg-app); }
+.login-side { min-height: 100vh; display: flex; flex-direction: column; align-items: flex-start; padding: 40px clamp(24px, 6vw, 96px) 28px; }
+.login-form { width: 100%; max-width: 420px; margin-block: auto; padding-block: 40px; display: flex; flex-direction: column; align-items: flex-start; }
+.login-form h1 { font-size: clamp(32px, 3.4vw, 46px); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-1); }
+.login-form > p { margin: 10px 0 40px; font-size: 15px; color: var(--text-2); }
+.login-form form { width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+.login-form > button ~ form { margin-top: 32px; }
+.login-field { width: 100%; display: block; font-size: 13.5px; color: var(--text-2); }
+.login-field input { display: block; width: 100%; padding: 8px 0 10px; border: 1px solid var(--field-line); background: transparent; color: var(--text-1); font-size: 16px; }
+.login-field input:focus { outline: none; border-color: var(--accent); box-shadow: inset 0 -1px var(--accent); }
+.login-check { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-2); cursor: pointer; user-select: none; }
+.login-check input { width: 16px; height: 16px; flex-shrink: 0; }
+.login-note { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-block: 1px solid var(--crit-border); font-size: 13.5px; line-height: 1.45; color: var(--danger); }
+.login-form > .login-note { margin-top: 20px; }
+.login-link { border: 0; background: none; padding: 4px 0; font: inherit; font-size: 13.5px; color: var(--accent-fg); cursor: pointer; text-align: left; }
+.login-link:hover { text-decoration: underline; }
+.login-form > .login-link { margin-top: 20px; }
+.login-foot { width: 100%; max-width: 420px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; color: var(--text-3); }
+
+.login-panel { position: relative; overflow: hidden; background: var(--login-bg); color: color-mix(in srgb, var(--login-title) 7%, var(--login-bg)); }
+.login-panel svg { position: absolute; top: 50%; left: -22%; width: auto; height: 124vh; translate: 0 -46%; }
+.login-panel path:nth-child(n + 3) { fill: color-mix(in srgb, var(--login-accent) 16%, var(--login-bg)); }
+
+@keyframes login-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+.login-error-shake { animation: login-shake 0.4s var(--ease-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .login-error-shake { animation: none; }
+}
+
+@media (max-width: 860px) {
+  .login-page { grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr 72px; }
+  .login-side { min-height: calc(100vh - 72px); padding: 28px 24px 20px; }
+  .login-panel svg { height: 420px; left: auto; right: -40px; }
+}
+
+/* Barra de filtros da lista */
+.filter-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 14px var(--page-gutter); background: var(--bg-card); flex-shrink: 0; }
+
+/* ── Microsoft Teams (aba pessoal) ────────────────────────────────
+   O Teams já mostra nome/ícone do app e a conta: some a marca da barra. */
+[data-host="teams"] .app-brand {
+  display: none !important;
+}
+.teams-toolbar .mobile-menu-btn {
+  min-width: 32px;
+  min-height: 32px;
+}
+
+/* ── Responsive Utilities ────────────────────────────────────────── */
+.mobile-menu-btn {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    padding: 6px;
+    cursor: pointer;
+    color: var(--text-1);
+    flex-shrink: 0;
+  }
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-on-tablet {
+    display: none !important;
+  }
+  .responsive-filter-bar {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .responsive-header {
+    padding: 0 var(--page-gutter) !important;
+    gap: 8px !important;
+  }
+  .responsive-content-padding {
+    padding: 12px 10px !important;
+  }
+}
+
+.ticket-table-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.ticket-table-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Borda da lista com rolagem lateral ── */
+.scroll-edge { position: absolute; top: 0; bottom: 0; width: 56px; z-index: 10; display: flex; align-items: center; pointer-events: none; }
+.scroll-edge-left { left: 0; background: linear-gradient(to left, transparent, var(--bg-card)); }
+.scroll-edge-right { right: 0; justify-content: flex-end; background: linear-gradient(to right, transparent, var(--bg-card)); }
+.scroll-edge button { pointer-events: auto; width: 30px; height: 30px; margin: 0 6px; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--bg-card); color: var(--text-2); display: grid; place-items: center; cursor: pointer; }
+.scroll-edge button:hover { color: var(--accent-fg); border-color: var(--accent); }
+
+/* loading-bar: barra do Loading e do PageLoader */
+.loading-bar-track {
+  width: 40px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.loading-bar-fill {
+  height: 100%; width: 50%;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: loading-bar 1s infinite linear;
+}
+@keyframes loading-bar {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* Loading e PageLoader (components/ui/Loading.tsx, PageLoader.tsx) */
+.app-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  color: var(--text-2);
+  font-size: var(--text-body);
+  font-weight: 500;
+  text-align: center;
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.app-loading[data-visible="true"] { opacity: 1; }
+.app-loading[data-size="page"] { flex: 1 1 auto; min-height: max(320px, 50vh); padding: 24px 16px; }
+.app-loading[data-size="compact"] { gap: 8px; min-height: 96px; padding: 12px; font-size: var(--text-body-sm); }
+/* Dentro de grade com rolagem horizontal: fica no centro da tela, não da largura mínima da grade. */
+.app-loading-pinned { position: sticky; left: 0; max-width: 100vw; }
+.app-loading .loading-bar-track { width: 96px; margin: 0; }
+.app-loading-mark { display: inline-flex; animation: app-loading-breathe 1.8s ease-in-out infinite; }
+@keyframes app-loading-breathe {
+  0%, 100% { opacity: .7; transform: scale(.96); }
+  50%      { opacity: 1;  transform: scale(1); }
+}
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--bg-app);
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-loading { transition: none; }
+  .app-loading-mark { animation: none; }
+  .app-loading .loading-bar-fill { animation: none; width: 100%; }
+}
+
+/* Campos de senha usam o botão "Mostrar senha" do PwdInp (components/ui/Form.tsx).
+   Esconde os reveladores nativos do Edge/Chrome para não duplicar o ícone. */
+.pwd-input::-ms-reveal,
+.pwd-input::-ms-clear {
+  display: none;
+}
+.pwd-input::-webkit-credentials-auto-fill-button,
+.pwd-input::-webkit-strong-password-auto-fill-button {
+  visibility: hidden;
+  pointer-events: none;
+  margin: 0;
+  width: 0;
+}
+
+/* ── Pagination Toolbar ─────────────────────────────────────────── */
+.pagination-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+  flex-wrap: wrap;
+}
+
+.pagination-toolbar-sep {
+  color: var(--text-3);
+  opacity: 0.6;
+  user-select: none;
+}
+
+.pagination-toolbar-info {
+  color: var(--text-3);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pagination-toolbar-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.pagination-toolbar-size select {
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-input);
+  color: var(--text-1);
+  font-size: 12px;
+  font-family: var(--font);
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.pagination-toolbar-pages {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination-mobile-only {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .pagination-toolbar {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .pagination-toolbar-info,
+  .pagination-toolbar-size,
+  .pagination-toolbar-sep {
+    display: none !important;
+  }
+  .pagination-desktop-only {
+    display: none !important;
+  }
+  .pagination-mobile-only {
+    display: inline-flex !important;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+    padding: 0 4px;
+  }
+}
+
+/* Minhas Tarefas: coluna ID fixa precisa de fundo opaco, e o hover da linha a pinta junto. */
+.mytask-row { background: var(--bg-card); transition: background 0.08s; }
+.mytask-row:hover,
+.mytask-row:hover > .mytask-sticky { background: var(--bg-card-hover); }
+.mytask-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.mytask-sticky { position: sticky; left: 0; z-index: 1; background: var(--bg-card); box-shadow: inset -1px 0 0 var(--border); }
+
+/* Markdown renderizado (descrição da task): o reset global zera margens e recuo de listas. */
+.markdown-body > * + * { margin-top: 0.6em; }
+.markdown-body ul, .markdown-body ol { padding-left: 1.4em; }
+.markdown-body li + li { margin-top: 0.2em; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3 { line-height: 1.3; }
+.markdown-body a { color: var(--accent-fg); text-decoration: underline; }
+.markdown-body code { font-family: ui-monospace, monospace; font-size: 0.92em; }
+.markdown-body pre { overflow-x: auto; padding: 8px 10px; border-radius: var(--radius-md); background: var(--bg-card); }
+.markdown-body blockquote { padding: 6px 10px; border-radius: var(--radius-md); background: var(--bg-card); color: var(--text-2); }
+.markdown-body img { max-width: 100%; height: auto; }
+.markdown-body table { display: block; max-width: 100%; overflow-x: auto; }

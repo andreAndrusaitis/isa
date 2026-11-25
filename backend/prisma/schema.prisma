@@ -1,0 +1,2316 @@
+generator client {
+  provider        = "prisma-client-js"
+  engineType      = "binary"
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  user
+  agent
+  supervisor
+  manager
+  admin
+}
+
+enum AuthProvider {
+  local
+  microsoft
+}
+
+// Tier enum removed to support dynamic tiers
+
+enum TicketStatus {
+  open
+  in_progress
+  pending
+  resolved
+  closed
+}
+
+/// Canal por onde o chamado entrou. Null = aberto antes do registro ("Não identificado").
+enum TicketChannel {
+  portal
+  email
+  api
+  teams
+  copilot
+}
+
+enum TicketPendingReason {
+  pending_user
+  pending_vendor
+  pending_approval
+  pending_parts
+  pending_schedule
+  /// Chamado vinculado a uma task de projeto: SLA pausado, vale o prazo da task.
+  pending_project
+}
+
+enum TicketType {
+  incident
+  request
+  problem
+  change
+}
+
+enum TicketPriority {
+  low
+  medium
+  high
+}
+
+enum MessageType {
+  user
+  agent
+  email
+  internal
+}
+
+enum NotificationType {
+  new_message
+  new_attachment
+  ticket_assigned
+  ticket_queue_moved
+  new_ticket
+  ticket_redirected
+  ticket_schedule_reopened
+  routing_alert
+  task_updated
+  project_forecast
+}
+
+model Organization {
+  id                 String             @id @default(uuid())
+  name               String
+  domains            String[]
+  authorized_domains AuthorizedDomain[]
+  tier               String             @default("bronze")
+  active             Boolean            @default(true)
+  manager_global     Boolean            @default(false)
+  address            String?
+  phone              String?
+  notes              String?
+  location           String?
+  zip_code           String?
+  website            String?
+  expires_at         DateTime?
+  expiry_message     String?
+  warning_active     Boolean            @default(true)
+  /// Cliente pode responder por e-mail os e-mails de chamado (a resposta entra no chamado).
+  email_reply_enabled Boolean           @default(false)
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+  deleted_at         DateTime?
+  users              User[]
+  tickets            Ticket[]
+  queues             Queue[]            @relation("OrganizationQueues")
+  queue_access       OrgQueueAccess[]
+  manager_links      OrgManagerLink[]
+  org_scopes         UserOrgScope[]
+  category_blocks    OrgCategoryBlock[]
+  ai_interactions    AiInteraction[]
+  sla_config         SlaConfig?         @relation(fields: [tier], references: [tier])
+
+  @@map("organizations")
+}
+
+model User {
+  id                       String                  @id @default(uuid())
+  name                     String
+  email                    String                  @unique
+  password                 String?
+  auth_provider            AuthProvider            @default(local)
+  must_change_password     Boolean                 @default(false)
+  role                     Role                    @default(user)
+  avatar                   String?
+  queues                   String[]
+  permissions              String[]                @default([])
+  module_tickets           Boolean?
+  module_projects          Boolean?
+  module_documents         Boolean?
+  my_tasks_columns         Json?
+  active                   Boolean                 @default(true)
+  // Usuário técnico de uma chave da API de Projetos: não faz login nem aparece na gestão de usuários.
+  is_service_account       Boolean                 @default(false)
+  manager_global           Boolean                 @default(false)
+  org_id                   String?
+  position                 String?
+  department               String?
+  phone                    String?
+  location                 String?
+  manager_id               String?
+  welcome_email_sent_at    DateTime?
+  welcome_email_status     String?
+  welcome_email_error      String?
+  created_at               DateTime                @default(now())
+  updated_at               DateTime                @updatedAt
+  deleted_at               DateTime?
+  session_invalidated_at   DateTime?
+  org                      Organization?           @relation(fields: [org_id], references: [id])
+  manager                  User?                   @relation("UserToManager", fields: [manager_id], references: [id])
+  subordinates             User[]                  @relation("UserToManager")
+  tickets_created          Ticket[]                @relation("TicketUser")
+  tickets_assigned         Ticket[]                @relation("TicketAgent")
+  tickets_opened_on_behalf Ticket[]                @relation("TicketCreator")
+  tickets_deleted          Ticket[]                @relation("TicketDeletedBy")
+  messages                 TicketMessage[]
+  events                   TicketEvent[]
+  refresh_tokens           RefreshToken[]
+  audit_logs               AuditLog[]
+  notifications            Notification[]
+  redirect_logs_prev       InactivityRedirectLog[] @relation("PrevAgentRedirect")
+  redirect_logs_new        InactivityRedirectLog[] @relation("NewAgentRedirect")
+  managed_orgs             OrgManagerLink[]
+  org_scopes               UserOrgScope[]
+  mcp_tokens               McpToken[]
+  macros                   Macro[]                 @relation("MacroCreatedBy")
+  ticket_participations    TicketParticipant[]     @relation("ParticipantAgent")
+  participants_added       TicketParticipant[]     @relation("ParticipantAddedBy")
+  survey_templates_updated SurveyTemplate[]        @relation("TemplateUpdatedBy")
+  owned_projects           Project[]               @relation("ProjectOwner")
+  sprint_source_projects   Project[]               @relation("ProjectSprintSource")
+  global_sprints           GlobalSprint[]          @relation("GlobalSprintOwner")
+  project_memberships      ProjectMember[]         @relation("ProjectMemberUser")
+  tasks_assigned_projects  Task[]                  @relation("TaskAssignee")
+  tasks_created_projects   Task[]                  @relation("TaskCreator")
+  task_comments            TaskComment[]           @relation("TaskCommentAuthor")
+  task_activities          TaskActivity[]          @relation("TaskActivityActor")
+  task_multi_assignments   TaskAssignee[]          @relation("TaskAssigneeMulti")
+  documents_created        Document[]              @relation("DocumentCreatedBy")
+  documents_updated        Document[]              @relation("DocumentUpdatedBy")
+  attachments_uploaded     Attachment[]            @relation("AttachmentUploader")
+  mentions_received        Mention[]               @relation("MentionedUser")
+  approvals_assigned       Approval[]              @relation("ApprovalApprover")
+  templates_created        Template[]              @relation("TemplateCreatedBy")
+  automations_created      Automation[]            @relation("AutomationCreatedBy")
+  task_watching            TaskWatcher[]           @relation("TaskWatcherUser")
+  project_favorites        Favorite[]              @relation("FavoriteUser")
+  saved_filters            SavedFilter[]           @relation("SavedFilterUser")
+  custom_views_created     CustomView[]            @relation("CustomViewCreatedBy")
+  project_webhooks_created ProjectWebhook[]        @relation("ProjectWebhookCreatedBy")
+  project_api_keys_created ProjectApiKey[]         @relation("ProjectApiKeyCreatedBy")
+  project_api_key_service  ProjectApiKey?          @relation("ProjectApiKeyServiceUser")
+
+  ai_feedback AiFeedback[]
+  teams_conversations TeamsConversation[]
+  knowledge_articles_created KnowledgeArticle[] @relation("KnowledgeArticleCreatedBy")
+  knowledge_articles_updated KnowledgeArticle[] @relation("KnowledgeArticleUpdatedBy")
+  ai_interactions AiInteraction[]
+
+  doc_spaces_created       DocSpace[]       @relation("DocSpaceCreatedBy")
+  doc_space_memberships    DocSpaceMember[] @relation("DocSpaceMemberUser")
+  doc_pages_created        DocPage[]        @relation("DocPageCreatedBy")
+  doc_pages_updated        DocPage[]        @relation("DocPageUpdatedBy")
+  doc_pages_deleted        DocPage[]        @relation("DocPageDeletedBy")
+  doc_page_versions        DocPageVersion[] @relation("DocPageVersionCreatedBy")
+  doc_favorites            DocFavorite[]    @relation("DocFavoriteUser")
+  doc_attachments          DocAttachment[]  @relation("DocAttachmentCreatedBy")
+
+  @@index([manager_id])
+  @@index([org_id])
+  @@map("users")
+}
+
+model OrgManagerLink {
+  id         String       @id @default(uuid())
+  org_id     String
+  manager_id String
+  created_at DateTime     @default(now())
+  org        Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  manager    User         @relation(fields: [manager_id], references: [id], onDelete: Cascade)
+
+  @@unique([org_id, manager_id])
+  @@map("org_manager_links")
+}
+
+model UserOrgScope {
+  id      String       @id @default(uuid())
+  user_id String
+  org_id  String
+  user    User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  org     Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, org_id])
+  @@map("user_org_scopes")
+}
+
+model AuthorizedDomain {
+  id         String       @id @default(uuid())
+  domain     String       @unique
+  org_id     String
+  active     Boolean      @default(true)
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  org        Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+
+  @@map("authorized_domains")
+}
+
+model RefreshToken {
+  id         String   @id @default(uuid())
+  token      String   @unique
+  user_id    String
+  expires_at DateTime
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  user_id    String?
+  action     String // e.g. "LOGIN", "LOGOUT", "UPDATE_TICKET"
+  resource   String // e.g. "AUTH", "TICKET", "USER"
+  details    Json? // Context about the action
+  ip         String?
+  user_agent String?
+  created_at DateTime @default(now())
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@map("audit_logs")
+}
+
+model Queue {
+  id            String           @id @default(uuid())
+  name          String
+  color         String           @default("#0f73ac")
+  description   String           @default("")
+  active        Boolean          @default(true)
+  icon          String?
+  image_url     String?
+  organizations Organization[]   @relation("OrganizationQueues")
+  queue_access  OrgQueueAccess[]
+
+  @@map("queues")
+}
+
+model Category {
+  id              String             @id @default(uuid())
+  name            String
+  icon            String             @default("")
+  color           String             @default("#0f73ac")
+  description     String?
+  image_url       String?
+  active          Boolean            @default(true)
+  subcategories   Subcategory[]
+  tickets         Ticket[]
+  sla_configs     SlaConfig[]
+  plan_categories PlanCategory[]
+  org_blocks      OrgCategoryBlock[]
+  knowledge_articles KnowledgeArticleCategory[]
+
+  @@map("categories")
+}
+
+model Subcategory {
+  id                     String                @id @default(uuid())
+  name                   String
+  category_id            String
+  active                 Boolean               @default(true)
+  description            String?
+  icon                   String?
+  image_url              String?
+  is_special             Boolean               @default(false)
+  special_form_schema    Json?
+  special_title_template String?
+  category               Category              @relation(fields: [category_id], references: [id])
+  tickets                Ticket[]
+  intake_items           IntakeChecklistItem[]
+
+  @@map("subcategories")
+}
+
+// Macros: respostas pré-definidas cadastradas por Admin/Gerente e usadas
+// pelos analistas no chat do chamado. Globais (sem vínculo a fila/categoria).
+// Não há exclusão — apenas desativação via `active`.
+model Macro {
+  id            String   @id @default(uuid())
+  title         String
+  content       String
+  active        Boolean  @default(true)
+  created_by_id String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  created_by    User?    @relation("MacroCreatedBy", fields: [created_by_id], references: [id])
+
+  @@map("macros")
+}
+
+model Ticket {
+  id                      String                      @id
+  title                   String
+  description             String?
+  special_data            Json?
+  status                  TicketStatus                @default(open)
+  priority                TicketPriority              @default(medium)
+  type                    TicketType                  @default(incident)
+  display_number          String                      @unique
+  queue                   String?
+  category_id             String?
+  subcategory_id          String?
+  user_id                 String
+  created_by_id           String?
+  org_id                  String?
+  assigned_to_id          String?
+  /// Primeira vez que o chamado ganhou responsável (trigger no banco; não usar para o responsável atual).
+  first_assigned_at       DateTime?
+  collab_queue            String?
+  sla_deadline            DateTime
+  first_response_deadline DateTime?
+  escalated               Boolean                     @default(false)
+  is_reopened             Boolean                     @default(false)
+  resolution_details      String?
+  resolved_at             DateTime?
+  closed_at               DateTime?
+  attachment_url          String?
+  auto_redirected         Boolean                     @default(false)
+  redirected_at           DateTime?
+  chat_enabled            Boolean                     @default(false)
+  reopen_sla_enabled      Boolean?
+  reopen_sla_limit_hours  Int?
+  sla_paused_at           DateTime?
+  total_paused_minutes    Int                         @default(0)
+  pending_reason          TicketPendingReason?
+  pending_schedule_at     DateTime?
+  /// Nova previsão combinada com o cliente; ele vê esta data no lugar do prazo do plano.
+  client_forecast_at      DateTime?
+  /// Agente intake: null | complete | incomplete | complemented | dismissed | skipped
+  intake_status           String?
+  /// Agente guidance: null | offered | deflected | declined | duplicate_offered | linked | skipped | none
+  guidance_status         String?
+  /// Canal de origem; null nos chamados anteriores ao registro.
+  channel                 TicketChannel?
+  /// Segundos entre abrir o formulário do portal e enviar; só no portal.
+  opening_seconds         Int?
+  /// Resolvido pela IA sem passar pela fila; reaberto, a marca sai e o chamado entra no fluxo normal.
+  ai_resolved             Boolean                     @default(false)
+  created_at              DateTime                    @default(now())
+  updated_at              DateTime                    @updatedAt
+  deleted_at              DateTime?
+  deleted_by_id           String?
+  /// Task de projeto que absorveu o chamado (ponte chamado ↔ task). Vários chamados → 1 task.
+  project_task_id         String?
+  project_forecast_alerted_at DateTime?
+  user                    User                        @relation("TicketUser", fields: [user_id], references: [id])
+  deleted_by              User?                       @relation("TicketDeletedBy", fields: [deleted_by_id], references: [id], onDelete: SetNull)
+  project_task            Task?                       @relation("TicketProjectTask", fields: [project_task_id], references: [id], onDelete: SetNull)
+  created_by              User?                       @relation("TicketCreator", fields: [created_by_id], references: [id])
+  org                     Organization?               @relation(fields: [org_id], references: [id])
+  assigned_to             User?                       @relation("TicketAgent", fields: [assigned_to_id], references: [id])
+  category                Category?                   @relation(fields: [category_id], references: [id])
+  subcategory             Subcategory?                @relation(fields: [subcategory_id], references: [id])
+  messages                TicketMessage[]
+  attachments             TicketAttachment[]
+  events                  TicketEvent[]
+  notifications           Notification[]
+  redirect_logs           InactivityRedirectLog[]
+  auto_close_logs         AutoCloseLog[]
+  participants            TicketParticipant[]
+  survey_instance         SurveyInstance?
+  ai_agent_runs           AiAgentRun[]
+  ai_feedback             AiFeedback[]
+  ai_interactions         AiInteraction[]
+  links                   TicketLink[]                @relation("TicketLinkFrom")
+  linked_from             TicketLink[]                @relation("TicketLinkTo")
+  email_logs              EmailLog[]
+  inbound_emails          InboundEmail[]
+
+  @@index([deleted_at, status])
+  @@index([org_id])
+  @@index([queue])
+  @@index([assigned_to_id])
+  @@index([created_by_id])
+  @@index([created_at])
+  @@index([channel, created_at])
+  @@index([sla_deadline])
+  @@index([project_task_id])
+  @@map("tickets")
+}
+
+// Agentes que atuam em um chamado além do criador. O escalonamento de
+// "atuação unificada" (same_ticket) adiciona o agente escalonado como
+// participante colaborador, mantendo o chamado único (sem chamado filho).
+model TicketParticipant {
+  id          String    @id @default(uuid())
+  ticket_id   String
+  agent_id    String
+  role        String    @default("collaborator") // "owner" | "collaborator"
+  added_by_id String?
+  added_at    DateTime  @default(now())
+  removed_at  DateTime?
+  active      Boolean   @default(true)
+  ticket      Ticket    @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  agent       User      @relation("ParticipantAgent", fields: [agent_id], references: [id])
+  added_by    User?     @relation("ParticipantAddedBy", fields: [added_by_id], references: [id])
+
+  @@unique([ticket_id, agent_id])
+  @@index([agent_id, active])
+  @@map("ticket_participants")
+}
+
+model TicketMessage {
+  id             String      @id @default(uuid())
+  ticket_id      String
+  user_id        String
+  type           MessageType
+  text           String
+  attachment_url String?
+  is_realtime    Boolean     @default(false)
+  created_at     DateTime    @default(now())
+  ticket         Ticket      @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  user           User        @relation(fields: [user_id], references: [id])
+
+  @@index([ticket_id, created_at])
+  @@map("ticket_messages")
+}
+
+model TicketAttachment {
+  id         String   @id @default(uuid())
+  ticket_id  String
+  name       String
+  size       String
+  type       String
+  url        String
+  created_at DateTime @default(now())
+  ticket     Ticket   @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+
+  @@map("ticket_attachments")
+}
+
+model TicketEvent {
+  id                  String               @id @default(uuid())
+  ticket_id           String
+  user_id             String
+  from_status         TicketStatus?
+  to_status           TicketStatus
+  note                String?
+  pending_reason      TicketPendingReason?
+  pending_schedule_at DateTime?
+  attachment_url      String?
+  // Regra de automação que gerou o evento (sem FK: a regra pode ser apagada).
+  routing_rule_id     String?
+  created_at          DateTime             @default(now())
+  ticket              Ticket               @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  user                User                 @relation(fields: [user_id], references: [id])
+
+  @@index([routing_rule_id])
+  @@map("ticket_events")
+}
+
+model Notification {
+  id          String           @id @default(uuid())
+  user_id     String
+  ticket_id   String?
+  task_id     String?
+  type        NotificationType
+  title       String
+  body        String
+  sender_name String?
+  read_at     DateTime?
+  created_at  DateTime         @default(now())
+
+  user   User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  ticket Ticket? @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  task   Task?   @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id, read_at])
+  @@index([ticket_id])
+  @@map("notifications")
+}
+
+model RoutingRule {
+  id              String   @id @default(uuid())
+  name            String
+  enabled         Boolean  @default(true)
+  priority        Int
+  conditions      Json
+  match_type      String   @default("all")
+  actions         Json
+  else_actions    Json?
+  // Gatilho (catálogo em services/routing.ts). Regras antigas = ticket_created.
+  trigger         String   @default("ticket_created")
+  trigger_hours   Int? // só para ticket_idle
+  stop_processing Boolean  @default(true)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  @@map("routing_rules")
+}
+
+model SlaConfig {
+  id                            String                  @id @default(uuid())
+  tier                          String                  @unique
+  incident_first_response_hours Int
+  incident_resolution_hours     Int
+  request_first_response_hours  Int                     @default(8)
+  request_resolution_hours      Int                     @default(48)
+  problem_first_response_hours  Int                     @default(8)
+  problem_resolution_hours      Int                     @default(72)
+  change_first_response_hours   Int                     @default(24)
+  change_resolution_hours       Int                     @default(120)
+  default_queue                 String                  @default("geral")
+  escalation_queue              String                  @default("geral")
+  escalation_minutes            Int                     @default(30)
+  color                         String?
+  category_id                   String?
+  category                      Category?               @relation(fields: [category_id], references: [id])
+  created_at                    DateTime                @default(now())
+  updated_at                    DateTime                @updatedAt
+  packages                      PlanAdditionalPackage[]
+  plan_categories               PlanCategory[]
+  orgs                          Organization[]
+
+  @@map("sla_configs")
+}
+
+// Catálogo de pacotes adicionais que podem ser alocados a planos (SlaConfig)
+// existentes. A criação/gestão deste catálogo está fora do escopo da feature
+// 196 — aqui apenas existe a entidade para permitir a alocação aos planos.
+model AdditionalPackage {
+  id          String                  @id @default(uuid())
+  name        String                  @unique
+  description String?
+  active      Boolean                 @default(true)
+  created_at  DateTime                @default(now())
+  updated_at  DateTime                @updatedAt
+  plans       PlanAdditionalPackage[]
+
+  @@map("additional_packages")
+}
+
+model PlanCategory {
+  id            String    @id @default(uuid())
+  sla_config_id String
+  category_id   String
+  created_at    DateTime  @default(now())
+  sla_config    SlaConfig @relation(fields: [sla_config_id], references: [id], onDelete: Cascade)
+  category      Category  @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@unique([sla_config_id, category_id])
+  @@map("plan_categories")
+}
+
+model BusinessHoursConfig {
+  id                   String   @id @default(uuid())
+  business_hours_start String   @default("08:00")
+  business_hours_end   String   @default("18:00")
+  working_days         Int[]    @default([1, 2, 3, 4, 5])
+  timezone             String   @default("America/Sao_Paulo")
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+
+  @@map("business_hours_config")
+}
+
+// Vínculo (alocação) entre um plano (SlaConfig) e um pacote adicional.
+// O plano base permanece inalterado; cada registro adiciona um complemento.
+model PlanAdditionalPackage {
+  id            String            @id @default(uuid())
+  sla_config_id String
+  package_id    String
+  created_at    DateTime          @default(now())
+  sla_config    SlaConfig         @relation(fields: [sla_config_id], references: [id], onDelete: Cascade)
+  package       AdditionalPackage @relation(fields: [package_id], references: [id], onDelete: Cascade)
+
+  @@unique([sla_config_id, package_id])
+  @@map("plan_additional_packages")
+}
+
+model EscalationRule {
+  id                 String   @id @default(uuid())
+  name               String
+  type               String // 'transfer' | 'child_ticket' | 'same_ticket' | 'category_change'
+  target_queue_id    String?
+  target_category_id String?
+  auto_description   String?
+  active             Boolean  @default(true)
+  /// 'queue' (fila) | 'agent_pick' (analista escolhido na hora) | 'agent_fixed' (analista fixo)
+  target_mode        String   @default("queue")
+  target_agent_id    String?
+  /// Quem escalonou segue no chamado (transferência) ou acompanha o filho, como colaborador.
+  keep_origin        Boolean  @default(false)
+  /// Exige justificativa de quem escalona.
+  require_note       Boolean  @default(false)
+  /// Prioridade aplicada ao escalonar (null = mantém).
+  target_priority    String?
+  /// Filas em que a regra aparece (vazio = todas).
+  source_queue_ids   String[] @default([])
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  @@map("escalation_rules")
+}
+
+model OrgQueueAccess {
+  id             String       @id @default(uuid())
+  org_id         String
+  queue_id       String
+  expires_at     DateTime?
+  expiry_message String?
+  warning_active Boolean      @default(true)
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  org            Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  queue          Queue        @relation(fields: [queue_id], references: [id], onDelete: Cascade)
+
+  @@unique([org_id, queue_id])
+  @@map("org_queue_access")
+}
+
+// Categoria do plano desligada para uma empresa específica. Sem linha = a
+// empresa herda a categoria do plano. Habilitar = apagar a linha.
+model OrgCategoryBlock {
+  id          String       @id @default(uuid())
+  org_id      String
+  category_id String
+  created_at  DateTime     @default(now())
+  created_by  String?
+  org         Organization @relation(fields: [org_id], references: [id], onDelete: Cascade)
+  category    Category     @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@unique([org_id, category_id])
+  @@map("org_category_blocks")
+}
+
+model InactivityRedirectConfig {
+  id                    String         @id @default(uuid())
+  enabled               Boolean        @default(true)
+  inactivity_hours      Int            @default(24)
+  business_hours_start  String         @default("08:00")
+  business_hours_end    String         @default("18:00")
+  working_days          Int[]          @default([1, 2, 3, 4, 5])
+  timezone              String         @default("America/Sao_Paulo")
+  target_priority       TicketPriority @default(high)
+  vip_queue_id          String?
+  max_redirects_per_day Int            @default(1)
+  created_at            DateTime       @default(now())
+  updated_at            DateTime       @updatedAt
+
+  @@map("inactivity_redirect_config")
+}
+
+// Lixeira de chamados: retenção antes da exclusão definitiva (linha única).
+model TrashConfig {
+  id             String   @id @default(uuid())
+  enabled        Boolean  @default(true)
+  retention_days Int      @default(30)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@map("trash_config")
+}
+
+model ReopenSlaConfig {
+  id                    String   @id @default(uuid())
+  enabled               Boolean  @default(true)
+  reopen_limit_hours    Int      @default(24)
+  reopen_deadline_rule  String   @default("org_sla")
+  reopen_deadline_hours Int      @default(8)
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  @@map("reopen_sla_config")
+}
+
+// Fechamento automático: Resolvido sem resposta do cliente por N dias vira Fechado (linha única).
+model AutoCloseConfig {
+  id            String   @id @default(uuid())
+  enabled       Boolean  @default(true)
+  inactive_days Int      @default(7)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@map("auto_close_config")
+}
+
+model AutoCloseLog {
+  id            String    @id @default(uuid())
+  ticket_id     String
+  resolved_at   DateTime?
+  inactive_days Int
+  created_at    DateTime  @default(now())
+
+  ticket Ticket @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+
+  @@index([created_at])
+  @@map("auto_close_logs")
+}
+
+model InactivityRedirectLog {
+  id                      String         @id @default(uuid())
+  ticket_id               String
+  original_queue          String
+  previous_assigned_to_id String?
+  new_assigned_to_id      String?
+  previous_priority       TicketPriority
+  new_priority            TicketPriority
+  reason                  String         @default("24h_inactivity")
+  created_at              DateTime       @default(now())
+
+  ticket               Ticket @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  previous_assigned_to User?  @relation("PrevAgentRedirect", fields: [previous_assigned_to_id], references: [id])
+  new_assigned_to      User?  @relation("NewAgentRedirect", fields: [new_assigned_to_id], references: [id])
+
+  @@map("inactivity_redirect_logs")
+}
+
+enum SurveyQuestionType {
+  escala_1_5 // legado
+  unica_escolha // legado
+  texto_livre
+  escala
+  escolha_unica
+  escolha_multipla
+  nps
+}
+
+enum SurveyQuestionStyle {
+  emoji
+  estrela
+  numerico
+  pill
+}
+
+enum SurveyOptionAction {
+  reabrir_chamado
+}
+
+enum SurveyInstanceStatus {
+  enviada
+  respondida
+  expirada
+}
+
+enum SurveyDispatchChannel {
+  email
+  chat_auto
+  chat_macro
+}
+
+enum SurveyDispatchSendStatus {
+  enfileirado
+  enviado
+  falha
+}
+
+enum SurveyResolution {
+  total
+  parcial
+  nao
+}
+
+enum SurveyTimeRating {
+  muito_rapido
+  adequado
+  lento
+  muito_lento
+}
+
+model SurveyTemplate {
+  id                  String           @id @default(uuid())
+  nome                String
+  assunto_email       String
+  corpo_convite_auto  String
+  corpo_convite_macro String
+  ativo               Boolean          @default(true)
+  atualizado_por_id   String?
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+  atualizado_por      User?            @relation("TemplateUpdatedBy", fields: [atualizado_por_id], references: [id])
+  questions           SurveyQuestion[]
+  instances           SurveyInstance[]
+
+  @@map("survey_templates")
+}
+
+model SurveyQuestion {
+  id          String                 @id @default(uuid())
+  template_id String
+  ordem       Int
+  codigo      String? // legado (P1..P5), nao mais significativo
+  enunciado   String
+  descricao   String?
+  tipo        SurveyQuestionType
+  estilo      SurveyQuestionStyle?
+  obrigatoria Boolean                @default(false)
+  ativa       Boolean                @default(true)
+  created_at  DateTime               @default(now())
+  updated_at  DateTime               @updatedAt
+  template    SurveyTemplate         @relation(fields: [template_id], references: [id], onDelete: Cascade)
+  opcoes      SurveyQuestionOption[]
+  answers     SurveyAnswer[]
+
+  @@map("survey_questions")
+}
+
+model SurveyQuestionOption {
+  id          String              @id @default(uuid())
+  question_id String
+  ordem       Int
+  rotulo      String
+  valor       String
+  emoji       String?
+  cor         String?
+  pontuacao   Int?
+  acao        SurveyOptionAction?
+  created_at  DateTime            @default(now())
+  updated_at  DateTime            @updatedAt
+  question    SurveyQuestion      @relation(fields: [question_id], references: [id], onDelete: Cascade)
+
+  @@map("survey_question_options")
+}
+
+model SurveyInstance {
+  id            String               @id @default(uuid())
+  ticket_id     String               @unique // vínculo 1:1 com chamado
+  template_id   String
+  link_token    String               @unique
+  status        SurveyInstanceStatus @default(enviada)
+  criada_em     DateTime             @default(now())
+  respondida_em DateTime?
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+  ticket        Ticket               @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  template      SurveyTemplate       @relation(fields: [template_id], references: [id], onDelete: Cascade)
+  dispatches    SurveyDispatch[]
+  response      SurveyResponse?
+
+  @@map("survey_instances")
+}
+
+model SurveyDispatch {
+  id            String                   @id @default(uuid())
+  instance_id   String
+  canal         SurveyDispatchChannel
+  disparado_por String? // UUID do Usuário ou null se for sistema
+  disparado_em  DateTime                 @default(now())
+  status_envio  SurveyDispatchSendStatus @default(enfileirado)
+  created_at    DateTime                 @default(now())
+  updated_at    DateTime                 @updatedAt
+  instance      SurveyInstance           @relation(fields: [instance_id], references: [id], onDelete: Cascade)
+
+  @@map("survey_dispatches")
+}
+
+model SurveyResponse {
+  id              String            @id @default(uuid())
+  instance_id     String            @unique // única por chamado/instância
+  p1_csat         Int? // legado, mantido como backup
+  p2_resolucao    SurveyResolution?
+  p3_tempo        SurveyTimeRating?
+  p4_cordialidade Int? // 1..5
+  p5_comentario   String?
+  respondido_em   DateTime          @default(now())
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  instance        SurveyInstance    @relation(fields: [instance_id], references: [id], onDelete: Cascade)
+  answers         SurveyAnswer[]
+
+  @@map("survey_responses")
+}
+
+model SurveyAnswer {
+  id            String         @id @default(uuid())
+  response_id   String
+  question_id   String
+  valor_texto   String?
+  valor_numero  Int?
+  valores_opcao String[]       @default([])
+  created_at    DateTime       @default(now())
+  response      SurveyResponse @relation(fields: [response_id], references: [id], onDelete: Cascade)
+  question      SurveyQuestion @relation(fields: [question_id], references: [id])
+
+  @@map("survey_answers")
+}
+
+model TicketTypeConfig {
+  type    TicketType @id
+  enabled Boolean    @default(true)
+
+  @@map("ticket_type_configs")
+}
+
+// ============================================================
+// Webhooks de saída + API externa (entrada) — configuráveis pelo Admin
+// ============================================================
+
+enum WebhookDeliveryStatus {
+  pending
+  success
+  failed
+}
+
+enum ApiRequestStatus {
+  received
+  processing
+  success
+  duplicate
+  failed
+}
+
+model WebhookEndpoint {
+  id            String            @id @default(uuid())
+  name          String
+  url           String
+  secret        String // usado para assinar cada envio (HMAC-SHA256); nunca retornado em listagens
+  events        String[] // subconjunto de WEBHOOK_EVENTS (lista canônica em código)
+  filters       Json? // { types?: string[], priorities?: string[], queues?: string[], org_ids?: string[], category_ids?: string[] }
+  active        Boolean           @default(true)
+  created_by_id String?
+  created_at    DateTime          @default(now())
+  updated_at    DateTime          @updatedAt
+  deliveries    WebhookDelivery[]
+
+  @@map("webhook_endpoints")
+}
+
+model WebhookDelivery {
+  id              String                @id @default(uuid())
+  endpoint_id     String
+  event           String
+  payload         Json
+  status          WebhookDeliveryStatus @default(pending)
+  attempts        Int                   @default(0)
+  next_retry_at   DateTime? // null = pronto para a 1ª tentativa
+  response_status Int?
+  response_body   String? // truncado
+  error_message   String?
+  duration_ms     Int?
+  delivered_at    DateTime?
+  created_at      DateTime              @default(now())
+  updated_at      DateTime              @updatedAt
+  endpoint        WebhookEndpoint       @relation(fields: [endpoint_id], references: [id], onDelete: Cascade)
+
+  @@index([status, next_retry_at])
+  @@index([endpoint_id, created_at])
+  @@map("webhook_deliveries")
+}
+
+model ApiKey {
+  id            String          @id @default(uuid())
+  name          String
+  key_hash      String // sha256 hex da key — a key em si é exibida uma única vez
+  key_prefix    String // ex: "isakey_a1b2" para identificação na UI
+  scopes        String[] // subconjunto de: create_ticket, update_ticket, create_user, update_user,
+  // read_categories, read_subcategories, read_queues, read_organizations, read_tickets
+  org_id        String? // preenchido = key travada numa empresa; null = multi-empresa por domínio
+  active        Boolean         @default(true)
+  created_by_id String?
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  last_used_at  DateTime?
+  requests      ApiRequestLog[]
+
+  @@map("api_keys")
+}
+
+model McpToken {
+  id           String    @id @default(uuid())
+  user_id      String
+  name         String
+  token_hash   String    @unique
+  token_prefix String // ex: "isamcp_a1b2" para identificação na UI
+  active       Boolean   @default(true)
+  created_at   DateTime  @default(now())
+  last_used_at DateTime?
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("mcp_tokens")
+}
+
+model ApiRequestLog {
+  id                  String           @id @default(uuid())
+  // Uma das duas: chave da API de chamados ou da API de Projetos.
+  api_key_id          String?
+  project_api_key_id  String?
+  external_request_id String?
+  method              String // GET/POST/PATCH
+  path                String // ex: "/tickets"
+  status              ApiRequestStatus
+  request_payload     Json?
+  response_status     Int?
+  response_payload    Json?
+  error_code          String?
+  error_message       String?
+  resource_type       String? // 'ticket' | 'user'
+  resource_id         String?
+  ip                  String?
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+  api_key             ApiKey?          @relation(fields: [api_key_id], references: [id], onDelete: Cascade)
+  project_api_key     ProjectApiKey?   @relation(fields: [project_api_key_id], references: [id], onDelete: Cascade)
+
+  @@unique([api_key_id, external_request_id])
+  @@unique([project_api_key_id, external_request_id])
+  @@index([api_key_id, created_at])
+  @@index([project_api_key_id, created_at])
+  @@map("api_request_logs")
+}
+
+// Execuções dos agentes de IA (backend/src/ai). Uma linha por execução de
+// qualquer agente ('triage', ...); `result` guarda a decisão completa do agente
+// (opções, probabilidades, confiança, evidência) para auditoria e métricas.
+model AiAgentRun {
+  id             String       @id @default(uuid())
+  agent          String
+  ticket_id      String?
+  mode           String // 'shadow' | 'apply'
+  model          String
+  prompt_version String
+  status         String // 'ok' | 'error'
+  error          String?
+  latency_ms     Int
+  input_tokens   Int          @default(0)
+  output_tokens  Int          @default(0)
+  result         Json?
+  created_at     DateTime     @default(now())
+  ticket         Ticket?      @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  feedback       AiFeedback[]
+
+  @@index([agent, created_at])
+  @@index([ticket_id])
+  @@map("ai_agent_runs")
+}
+
+// Correção humana de um campo que a IA decidiu (ex.: analista troca a categoria
+// que a triagem escolheu). Guarda o valor da IA, o anterior e o novo, e quem
+// corrigiu: base para medir acerto do agente. Guarda a trilha de toda mudança
+// humana em campo decidido pela IA; para acerto/reclassificação use a PRIMEIRA
+// linha por (run_id, field): as seguintes têm from_value ≠ ai_value.
+model AiFeedback {
+  id         String     @id @default(uuid())
+  run_id     String
+  ticket_id  String
+  agent      String
+  field      String // 'type' | 'category' | 'subcategory' | 'priority'
+  ai_value   String?
+  ai_label   String?
+  from_value String?
+  to_value   String?
+  user_id    String
+  created_at DateTime   @default(now())
+  run        AiAgentRun @relation(fields: [run_id], references: [id], onDelete: Cascade)
+  ticket     Ticket     @relation(fields: [ticket_id], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [user_id], references: [id])
+
+  @@index([run_id])
+  @@index([ticket_id])
+  @@index([agent, created_at])
+  @@map("ai_feedback")
+}
+
+// Exemplos rotulados para RAG dos agentes de IA (few-shot por similaridade).
+// Fontes: 'backlog' (base antiga rotulada) e 'ticket' (chamados fechados e
+// validados por analistas). `text` é o texto mascarado que foi embedado;
+// `labels` são os rótulos do agente (triagem: {type, urgency, impact, tema}).
+// Embedding em double precision[] + cosseno em memória no Node; trocar por vector(1536) + índice HNSW quando passar de
+// alguns milhares de exemplos por agente.
+model AiExample {
+  id         String   @id @default(uuid())
+  agent      String
+  source     String // 'backlog' | 'ticket'
+  source_id  String
+  text       String
+  labels     Json
+  embedding  Float[]
+  /// false = vetado por um analista (👎 na Orientação IA): sai da busca.
+  active     Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  @@unique([agent, source, source_id])
+  @@index([agent])
+  @@map("ai_examples")
+}
+
+/// Modo de cada agente de IA escolhido em Admin › Motor IA. Sem linha = padrão do env (AI_<AGENTE>_MODE).
+/// Configurações do sistema editadas pelo admin: appearance | sso_microsoft | ai_provider.
+model SystemSetting {
+  key           String   @id
+  value         Json     @default("{}")
+  /// Só texto cifrado (utils/secretBox.ts); nunca sai pela API.
+  secrets       Json     @default("{}")
+  updated_by_id String?
+  updated_at    DateTime @updatedAt
+
+  @@map("system_settings")
+}
+
+model AiAgentSetting {
+  agent      String   @id
+  mode       String // off | shadow | apply
+  /// Configurações do agente no Motor IA (declaradas em agents/registry.ts); null = padrões.
+  config     Json?
+  updated_at DateTime @updatedAt
+
+  @@map("ai_agent_settings")
+}
+
+/// Checklist de informações mínimas na abertura (agente intake). subcategory_id null = vale para o tipo inteiro.
+model IntakeChecklistItem {
+  id             String       @id @default(uuid())
+  type           TicketType
+  subcategory_id String?
+  key            String
+  label          String
+  criterion      String
+  question       String
+  kind           String       @default("text") // text | evidence (imagem anexada cumpre por regra)
+  required       Boolean      @default(true) // false = só aparece na nota, nunca vira pergunta
+  sort           Int          @default(0)
+  active         Boolean      @default(true)
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  subcategory    Subcategory? @relation(fields: [subcategory_id], references: [id], onDelete: Cascade)
+
+  @@index([type])
+  @@map("intake_checklist_items")
+}
+
+/// Vínculo entre chamados. kind 'duplicate': ticket_id (novo) duplica related_id (já aberto).
+model TicketLink {
+  id            String   @id @default(uuid())
+  ticket_id     String
+  related_id    String
+  kind          String   @default("duplicate")
+  created_by_id String
+  created_at    DateTime @default(now())
+  ticket        Ticket   @relation("TicketLinkFrom", fields: [ticket_id], references: [id], onDelete: Cascade)
+  related       Ticket   @relation("TicketLinkTo", fields: [related_id], references: [id], onDelete: Cascade)
+
+  @@unique([ticket_id, related_id])
+  @@index([related_id])
+  @@map("ticket_links")
+}
+
+/// Todo e-mail que o sistema tentou enviar (sucesso, falha ou ignorado por falta de ACS).
+model EmailLog {
+  id         String   @id @default(uuid())
+  kind       String // welcome | ticket_created | ticket_update | survey | survey_resend | auto_reply
+  recipient  String
+  subject    String
+  status     String // SUCCESS | FAILED | SKIPPED_ACS_NOT_CONFIGURED
+  error      String?
+  html       String? // corpo enviado (senha inicial mascarada); nulo em logs antigos
+  ticket_id  String?
+  /// graph (caixa de atendimento) | acs; nulo em logs antigos
+  provider            String?
+  /// Message-ID do e-mail enviado pelo Graph: liga a resposta do cliente a este envio.
+  internet_message_id String?  @unique
+  conversation_id     String?
+  /// Enviado convidando a responder (resposta entra no chamado); falso = "[Não responda]".
+  replyable           Boolean  @default(false)
+  created_at DateTime @default(now())
+  ticket     Ticket?  @relation(fields: [ticket_id], references: [id], onDelete: SetNull)
+
+  @@index([created_at])
+  @@index([ticket_id])
+  @@index([conversation_id])
+  @@map("email_logs")
+}
+
+/// E-mail recebido na caixa de atendimento e o que o ISA fez com ele.
+/// A linha é criada antes do processamento: o graph_message_id único impede
+/// que as duas instâncias do backend processem a mesma mensagem.
+model InboundEmail {
+  id                  String    @id @default(uuid())
+  graph_message_id    String    @unique
+  internet_message_id String?
+  from_email          String
+  from_name           String?
+  subject             String
+  received_at         DateTime
+  /// processing | ticket_created | message_added | note_added | ignored | failed
+  status              String    @default("processing")
+  attempts            Int       @default(1)
+  /// motivo legível do desfecho (ex.: resposta por e-mail desabilitada, domínio desconhecido)
+  detail              String?
+  ticket_id           String?
+  claimed_at          DateTime  @default(now())
+  processed_at        DateTime?
+  created_at          DateTime  @default(now())
+  ticket              Ticket?   @relation(fields: [ticket_id], references: [id], onDelete: SetNull)
+
+  @@index([received_at])
+  @@index([ticket_id])
+  @@index([status])
+  @@map("inbound_emails")
+}
+
+/// Remetentes que não abrem chamado por e-mail/API (spam, avisos automáticos).
+/// kind: email (endereço exato) | domain (domínio e subdomínios).
+model EmailBlock {
+  id            String    @id @default(uuid())
+  kind          String
+  value         String
+  reason        String?
+  hits          Int       @default(0)
+  last_hit_at   DateTime?
+  created_by_id String?
+  created_at    DateTime  @default(now())
+
+  @@unique([kind, value])
+  @@map("email_blocks")
+}
+
+enum ProjectPrivacy {
+  private
+  organization
+  restricted
+}
+
+enum ProjectMemberRole {
+  owner
+  manager
+  member
+  viewer
+}
+
+enum StatusCategory {
+  backlog
+  open
+  in_progress
+  in_review
+  done
+  cancelled
+}
+
+enum TaskPriority {
+  critical
+  high
+  normal
+  low
+  none
+}
+
+enum TaskActivityType {
+  created
+  status_changed
+  priority_changed
+  assignee_changed
+  due_date_changed
+  title_changed
+  description_changed
+  moved_list
+  commented
+  checklist_changed
+  archived
+  restored
+  milestone_changed
+  watcher_added
+  watcher_removed
+  relation_added
+  relation_removed
+  approval_requested
+  approval_decided
+  task_type_changed
+  story_points_changed
+  sprint_changed
+  assignees_changed
+  tag_changed
+  dependency_changed
+  ticket_changed
+  attachment_changed
+  start_date_changed
+  subtask_added
+}
+
+model Project {
+  id                       String         @id @default(uuid())
+  name                     String
+  description              String?
+  privacy                  ProjectPrivacy @default(organization)
+  owner_id                 String
+  next_task_seq            Int            @default(1)
+  allow_multiple_assignees Boolean        @default(false)
+  /// Cor de identidade (#rrggbb): pasta na sidebar e destaques dentro do projeto. Null = cor padrão do tema.
+  color                    String?
+  start_date               DateTime?
+  target_date              DateTime?
+  /// Origem dos sprints: null = sprints próprios; id de um Gerente = segue o calendário global dele.
+  sprint_source_id         String?
+  /// Pasta da sidebar (árvore compartilhada de organização dos projetos).
+  nav_folder_id            String?
+  archived_at              DateTime?
+  created_at               DateTime       @default(now())
+  updated_at               DateTime       @updatedAt
+
+  owner         User                    @relation("ProjectOwner", fields: [owner_id], references: [id])
+  sprint_source User?                   @relation("ProjectSprintSource", fields: [sprint_source_id], references: [id], onDelete: SetNull)
+  nav_folder    ProjectNavFolder?       @relation(fields: [nav_folder_id], references: [id], onDelete: SetNull)
+  members       ProjectMember[]
+  folders       ProjectFolder[]
+  lists         ProjectList[]
+  statuses      ProjectStatus[]
+  task_types    TaskType[]
+  sprints       Sprint[]
+  tasks         Task[]
+  custom_fields CustomField[]
+  tags          Tag[]
+  documents     Document[]
+  attachments   Attachment[]
+  automations   Automation[]
+  webhooks      ProjectWebhookProject[]
+  api_keys      ProjectApiKeyProject[]
+  favorites     Favorite[]
+  saved_filters SavedFilter[]
+  custom_views  CustomView[]
+
+  @@map("projects")
+}
+
+model ProjectMember {
+  id         String            @id @default(uuid())
+  project_id String
+  user_id    String
+  role       ProjectMemberRole @default(member)
+  created_at DateTime          @default(now())
+
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  user    User    @relation("ProjectMemberUser", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([project_id, user_id])
+  @@map("project_members")
+}
+
+model ProjectFolder {
+  id          String    @id @default(uuid())
+  project_id  String
+  name        String
+  position    Int       @default(0)
+  archived_at DateTime?
+  created_at  DateTime  @default(now())
+
+  project Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  lists   ProjectList[]
+
+  @@map("project_folders")
+}
+
+model ProjectList {
+  id          String    @id @default(uuid())
+  project_id  String
+  folder_id   String?
+  name        String
+  description String?
+  position    Int       @default(0)
+  archived_at DateTime?
+  created_at  DateTime  @default(now())
+
+  project Project        @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  folder  ProjectFolder? @relation(fields: [folder_id], references: [id])
+  tasks   Task[]
+
+  @@map("project_lists")
+}
+
+model ProjectStatus {
+  id                String         @id @default(uuid())
+  project_id        String
+  name              String
+  color             String
+  category          StatusCategory
+  position          Int            @default(0)
+  is_active         Boolean        @default(true)
+  requires_approval Boolean        @default(false)
+  wip_limit         Int?
+
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  tasks   Task[]
+
+  @@map("project_statuses")
+}
+
+model TaskType {
+  id         String  @id @default(uuid())
+  project_id String
+  name       String
+  icon       String
+  color      String
+  position   Int     @default(0)
+  is_active  Boolean @default(true)
+  // Prefixo do ID da task (BUG, FEAT…), único por projeto, e o próximo número
+  // desse tipo: as tasks ganham BUG-1, BUG-2… independente do #seq do projeto.
+  prefix      String @default("")
+  next_number Int    @default(1)
+
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  tasks   Task[]
+
+  @@map("task_types")
+}
+
+enum SprintStatus {
+  planned
+  active
+  completed
+}
+
+model Sprint {
+  id               String       @id @default(uuid())
+  project_id       String
+  /// Cópia de um sprint global (mantida em sincronia por services/globalSprints). Null = sprint próprio do projeto.
+  global_sprint_id String?
+  name             String
+  status           SprintStatus @default(planned)
+  start_date       DateTime?
+  end_date         DateTime?
+  position         Int          @default(0)
+
+  project       Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  global_sprint GlobalSprint? @relation(fields: [global_sprint_id], references: [id], onDelete: Cascade)
+  tasks         Task[]
+
+  @@unique([project_id, global_sprint_id])
+  @@map("sprints")
+}
+model GlobalSprint {
+  id         String       @id @default(uuid())
+  owner_id   String
+  name       String
+  status     SprintStatus @default(planned)
+  start_date DateTime?
+  end_date   DateTime?
+  position   Int          @default(0)
+  created_at DateTime     @default(now())
+
+  owner   User     @relation("GlobalSprintOwner", fields: [owner_id], references: [id], onDelete: Cascade)
+  sprints Sprint[]
+
+  @@index([owner_id])
+  @@map("global_sprints")
+}
+
+model ProjectNavFolder {
+  id         String   @id @default(uuid())
+  name       String
+  parent_id  String?
+  created_at DateTime @default(now())
+
+  parent   ProjectNavFolder?  @relation("NavFolderTree", fields: [parent_id], references: [id], onDelete: SetNull)
+  children ProjectNavFolder[] @relation("NavFolderTree")
+  projects Project[]
+
+  @@map("project_nav_folders")
+}
+
+model Task {
+  id           String       @id @default(uuid())
+  project_id   String
+  list_id      String?
+  status_id    String
+  parent_id    String?
+  task_type_id String?
+  sprint_id    String?
+  seq          Int
+  type_number  Int? // número dentro do tipo (BUG-12 → 12)
+  key          String? // chave pronta "BUG-12"; refeita quando o prefixo do tipo muda
+  title        String
+  description  String?
+  priority     TaskPriority @default(none)
+  assignee_id  String?
+  creator_id   String
+  start_date   DateTime?
+  due_date     DateTime?
+  story_points Int?
+  position     Int          @default(0)
+  is_milestone Boolean      @default(false)
+  recurrence   Json? // { freq: 'daily'|'weekly'|'monthly'|'yearly'|'custom', interval: number, mode: 'on_complete'|'on_due', weekdays?: number[] }
+  archived_at  DateTime?
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
+
+  project             Project            @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  list                ProjectList?       @relation(fields: [list_id], references: [id])
+  status              ProjectStatus      @relation(fields: [status_id], references: [id])
+  task_type           TaskType?          @relation(fields: [task_type_id], references: [id], onDelete: SetNull)
+  sprint              Sprint?            @relation(fields: [sprint_id], references: [id], onDelete: SetNull)
+  assignee            User?              @relation("TaskAssignee", fields: [assignee_id], references: [id])
+  creator             User               @relation("TaskCreator", fields: [creator_id], references: [id])
+  parent              Task?              @relation("TaskSubtasks", fields: [parent_id], references: [id], onDelete: Cascade)
+  subtasks            Task[]             @relation("TaskSubtasks")
+  checklist           ChecklistItem[]
+  comments            TaskComment[]
+  activities          TaskActivity[]
+  notifications       Notification[]
+  multi_assignees     TaskAssignee[]
+  dependents          TaskDependency[]   @relation("TaskDependent")
+  blocking            TaskDependency[]   @relation("TaskBlocker")
+  custom_field_values CustomFieldValue[]
+  tags                TaskTag[]
+  documents           TaskDocument[]
+  approvals           Approval[]
+  watchers            TaskWatcher[]
+  relations_from      TaskRelation[]     @relation("RelationFrom")
+  relations_to        TaskRelation[]     @relation("RelationTo")
+  linked_tickets      Ticket[]           @relation("TicketProjectTask")
+
+  @@unique([project_id, seq])
+  @@unique([task_type_id, type_number])
+  @@index([project_id, archived_at])
+  @@index([assignee_id, due_date])
+  @@map("tasks")
+}
+
+model ChecklistItem {
+  id         String   @id @default(uuid())
+  task_id    String
+  text       String
+  done       Boolean  @default(false)
+  position   Int      @default(0)
+  created_at DateTime @default(now())
+
+  task Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
+  @@map("checklist_items")
+}
+
+model TaskComment {
+  id         String    @id @default(uuid())
+  task_id    String
+  author_id  String
+  body       String
+  edited_at  DateTime?
+  deleted_at DateTime?
+  created_at DateTime  @default(now())
+
+  task     Task      @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  author   User      @relation("TaskCommentAuthor", fields: [author_id], references: [id])
+  mentions Mention[]
+
+  @@map("task_comments")
+}
+
+model TaskActivity {
+  id         String           @id @default(uuid())
+  task_id    String
+  actor_id   String
+  type       TaskActivityType
+  from_value String?
+  to_value   String?
+  created_at DateTime         @default(now())
+
+  task  Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  actor User @relation("TaskActivityActor", fields: [actor_id], references: [id])
+
+  @@map("task_activities")
+}
+
+model TaskAssignee {
+  id      String @id @default(uuid())
+  task_id String
+  user_id String
+
+  task Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  user User @relation("TaskAssigneeMulti", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([task_id, user_id])
+  @@map("task_assignees")
+}
+
+model TaskDependency {
+  id            String   @id @default(uuid())
+  task_id       String
+  depends_on_id String
+  created_at    DateTime @default(now())
+
+  task       Task @relation("TaskDependent", fields: [task_id], references: [id], onDelete: Cascade)
+  depends_on Task @relation("TaskBlocker", fields: [depends_on_id], references: [id], onDelete: Cascade)
+
+  @@unique([task_id, depends_on_id])
+  @@map("task_dependencies")
+}
+
+enum CustomFieldType {
+  text
+  long_text
+  number
+  currency
+  date
+  checkbox
+  dropdown
+  multi_select
+  person
+  url
+}
+
+model CustomField {
+  id         String          @id @default(uuid())
+  project_id String
+  name       String
+  type       CustomFieldType
+  required   Boolean         @default(false)
+  options    Json?
+  position   Int             @default(0)
+
+  project Project            @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  values  CustomFieldValue[]
+
+  @@map("custom_fields")
+}
+
+model CustomFieldValue {
+  id              String @id @default(uuid())
+  task_id         String
+  custom_field_id String
+  value           Json
+
+  task         Task        @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  custom_field CustomField @relation(fields: [custom_field_id], references: [id], onDelete: Cascade)
+
+  @@unique([task_id, custom_field_id])
+  @@map("custom_field_values")
+}
+
+model Tag {
+  id         String @id @default(uuid())
+  project_id String
+  name       String
+  color      String
+
+  project Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  tasks   TaskTag[]
+
+  @@unique([project_id, name])
+  @@map("tags")
+}
+
+model TaskTag {
+  task_id String
+  tag_id  String
+
+  task Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([task_id, tag_id])
+  @@map("task_tags")
+}
+
+model Document {
+  id          String    @id @default(uuid())
+  project_id  String
+  parent_id   String?
+  title       String
+  content     Json
+  position    Int       @default(0)
+  archived_at DateTime?
+  created_by  String
+  updated_by  String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  project   Project        @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  parent    Document?      @relation("DocumentTree", fields: [parent_id], references: [id])
+  children  Document[]     @relation("DocumentTree")
+  creator   User           @relation("DocumentCreatedBy", fields: [created_by], references: [id])
+  editor    User           @relation("DocumentUpdatedBy", fields: [updated_by], references: [id])
+  taskLinks TaskDocument[]
+
+  @@map("documents")
+}
+
+model TaskDocument {
+  task_id     String
+  document_id String
+
+  task     Task     @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [document_id], references: [id], onDelete: Cascade)
+
+  @@id([task_id, document_id])
+  @@map("task_documents")
+}
+
+enum AttachmentEntityType {
+  task
+  comment
+  document
+}
+
+model Attachment {
+  id          String               @id @default(uuid())
+  project_id  String
+  entity_type AttachmentEntityType
+  entity_id   String
+  file_name   String
+  file_size   Int
+  mime_type   String
+  storage_key String
+  uploaded_by String
+  created_at  DateTime             @default(now())
+
+  project  Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  uploader User    @relation("AttachmentUploader", fields: [uploaded_by], references: [id])
+
+  @@map("project_attachments")
+}
+
+model Mention {
+  id           String   @id @default(uuid())
+  comment_id   String
+  mentioned_id String
+  created_at   DateTime @default(now())
+
+  comment   TaskComment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  mentioned User        @relation("MentionedUser", fields: [mentioned_id], references: [id])
+
+  @@map("task_mentions")
+}
+
+enum ApprovalStatus {
+  pending
+  approved
+  changes_requested
+}
+
+model Approval {
+  id          String         @id @default(uuid())
+  task_id     String
+  approver_id String
+  status      ApprovalStatus @default(pending)
+  comment     String?
+  decided_at  DateTime?
+  created_at  DateTime       @default(now())
+
+  task     Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  approver User @relation("ApprovalApprover", fields: [approver_id], references: [id])
+
+  @@map("task_approvals")
+}
+
+enum TemplateScope {
+  project
+  task
+}
+
+model Template {
+  id         String        @id @default(uuid())
+  scope      TemplateScope
+  name       String
+  created_by String
+  structure  Json
+  created_at DateTime      @default(now())
+
+  creator User @relation("TemplateCreatedBy", fields: [created_by], references: [id])
+
+  @@map("templates")
+}
+
+enum AutomationTrigger {
+  task_created
+  status_changed
+  assignee_changed
+  due_date_reached
+  task_overdue
+  task_completed
+  subtasks_completed
+  priority_changed
+  approval_decided
+  comment_created
+}
+
+enum AutomationActionType {
+  change_status
+  change_assignee
+  change_priority
+  add_tag
+  create_subtask
+  send_notification
+  request_approval
+  move_list
+  add_comment
+}
+
+model Automation {
+  id         String            @id @default(uuid())
+  project_id String
+  name       String
+  trigger    AutomationTrigger
+  conditions Json?
+  actions    Json
+  is_active  Boolean           @default(true)
+  created_by String
+  created_at DateTime          @default(now())
+
+  project Project         @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  creator User            @relation("AutomationCreatedBy", fields: [created_by], references: [id])
+  runs    AutomationRun[]
+
+  @@map("automations")
+}
+
+enum AutomationRunStatus {
+  success
+  error
+  skipped
+}
+
+model AutomationRun {
+  id            String              @id @default(uuid())
+  automation_id String
+  task_id       String?
+  status        AutomationRunStatus
+  error_message String?
+  executed_at   DateTime            @default(now())
+
+  automation Automation @relation(fields: [automation_id], references: [id], onDelete: Cascade)
+
+  @@map("automation_runs")
+}
+
+// ---------------------------------------------------------------------------
+// Projetos: milestones, watchers, relações, favoritos, views,
+// filtros salvos e webhooks próprios do módulo.
+// ---------------------------------------------------------------------------
+
+model TaskWatcher {
+  task_id    String
+  user_id    String
+  created_at DateTime @default(now())
+
+  task Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+  user User @relation("TaskWatcherUser", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@id([task_id, user_id])
+  @@map("task_watchers")
+}
+
+enum TaskRelationType {
+  relates_to
+  duplicates
+  causes
+}
+
+model TaskRelation {
+  id           String           @id @default(uuid())
+  from_task_id String
+  to_task_id   String
+  type         TaskRelationType @default(relates_to)
+  created_at   DateTime         @default(now())
+
+  from_task Task @relation("RelationFrom", fields: [from_task_id], references: [id], onDelete: Cascade)
+  to_task   Task @relation("RelationTo", fields: [to_task_id], references: [id], onDelete: Cascade)
+
+  @@unique([from_task_id, to_task_id])
+  @@map("task_relations")
+}
+
+enum FavoriteEntityType {
+  project
+  document
+}
+
+model Favorite {
+  id          String             @id @default(uuid())
+  user_id     String
+  entity_type FavoriteEntityType
+  entity_id   String
+  project_id  String?
+  created_at  DateTime           @default(now())
+
+  user    User     @relation("FavoriteUser", fields: [user_id], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, entity_type, entity_id])
+  @@map("project_favorites")
+}
+
+model SavedFilter {
+  id         String   @id @default(uuid())
+  user_id    String
+  project_id String?
+  name       String
+  filters    Json
+  created_at DateTime @default(now())
+
+  user    User     @relation("SavedFilterUser", fields: [user_id], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@map("project_saved_filters")
+}
+
+enum CustomViewType {
+  board
+  list
+  calendar
+  gantt
+  timeline
+}
+
+model CustomView {
+  id         String         @id @default(uuid())
+  project_id String
+  name       String
+  type       CustomViewType
+  filters    Json?
+  group_by   String?
+  sort_by    String?
+  position   Int            @default(0)
+  created_by String
+  created_at DateTime       @default(now())
+
+  project Project @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  creator User    @relation("CustomViewCreatedBy", fields: [created_by], references: [id])
+
+  @@map("project_custom_views")
+}
+
+model ProjectWebhook {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  url         String
+  secret      String
+  events      String[]
+  active      Boolean  @default(true)
+  created_by  String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  creator    User                     @relation("ProjectWebhookCreatedBy", fields: [created_by], references: [id])
+  deliveries ProjectWebhookDelivery[]
+  // Sem nenhuma linha aqui = webhook global (recebe eventos de todos os
+  // projetos, presentes e futuros) — mesma semântica que project_id null
+  // tinha antes, só que agora suporta selecionar VÁRIOS projetos em vez de
+  // no máximo um.
+  projects   ProjectWebhookProject[]
+
+  @@index([active])
+  @@map("project_webhooks")
+}
+
+model ProjectWebhookProject {
+  webhook_id String
+  project_id String
+
+  webhook ProjectWebhook @relation(fields: [webhook_id], references: [id], onDelete: Cascade)
+  project Project        @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@id([webhook_id, project_id])
+  @@index([project_id])
+  @@map("project_webhook_projects")
+}
+
+// Chave da API de Projetos (/api/integrations/v1/projects). Age como um usuário
+// de serviço próprio (o histórico mostra "API · <nome>"); sem projetos = todos
+// (só admin cria), com a mesma regra de dono dos webhooks do módulo.
+model ProjectApiKey {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  key_hash        String    @unique
+  key_prefix      String
+  scopes          String[]
+  active          Boolean   @default(true)
+  created_by      String
+  service_user_id String    @unique
+  last_used_at    DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  creator      User                   @relation("ProjectApiKeyCreatedBy", fields: [created_by], references: [id])
+  service_user User                   @relation("ProjectApiKeyServiceUser", fields: [service_user_id], references: [id])
+  projects     ProjectApiKeyProject[]
+  requests     ApiRequestLog[]
+
+  @@map("project_api_keys")
+}
+
+model ProjectApiKeyProject {
+  api_key_id String
+  project_id String
+
+  api_key ProjectApiKey @relation(fields: [api_key_id], references: [id], onDelete: Cascade)
+  project Project       @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@id([api_key_id, project_id])
+  @@index([project_id])
+  @@map("project_api_key_projects")
+}
+
+model ProjectWebhookDelivery {
+  id              String                @id @default(uuid())
+  webhook_id      String
+  event_id        String // evt_... idempotencia
+  event           String
+  payload         Json
+  status          WebhookDeliveryStatus @default(pending)
+  attempts        Int                   @default(0)
+  next_retry_at   DateTime?
+  response_status Int?
+  response_body   String?
+  error_message   String?
+  duration_ms     Int?
+  delivered_at    DateTime?
+  created_at      DateTime              @default(now())
+  updated_at      DateTime              @updatedAt
+
+  webhook ProjectWebhook @relation(fields: [webhook_id], references: [id], onDelete: Cascade)
+
+  @@index([status, next_retry_at])
+  @@index([webhook_id, created_at])
+  @@map("project_webhook_deliveries")
+}
+
+// Conversa do bot do Teams: referência para mensagens proativas, histórico
+// curto (últimas N mensagens) e a escrita pendente aguardando confirmação.
+model TeamsConversation {
+  id                     String    @id @default(uuid())
+  user_id                String?
+  tenant_id              String
+  aad_object_id          String
+  conversation_id        String    @unique
+  service_url            String
+  conversation_reference Json
+  history                Json      @default("[]")
+  pending_action         Json?
+  tokens_used            Int       @default(0)
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  last_message_at        DateTime?
+
+  user User? @relation(fields: [user_id], references: [id], onDelete: SetNull)
+
+  @@index([user_id])
+  @@index([tenant_id])
+  @@map("teams_conversations")
+}
+
+enum KnowledgeArticleStatus {
+  draft
+  published
+}
+
+enum AiInteractionFeedback {
+  useful
+  not_useful
+}
+
+// Artigo da base de conhecimento. O acesso segue empresa, plano e categoria:
+// artigo sem categoria não aparece para ninguém, por isso publicar exige ao menos uma.
+model KnowledgeArticle {
+  id              String                 @id @default(uuid())
+  title           String
+  content         String
+  status          KnowledgeArticleStatus @default(draft)
+  source_filename String?
+  created_by_id   String
+  updated_by_id   String
+  published_at    DateTime?
+  deleted_at      DateTime?
+  created_at      DateTime               @default(now())
+  updated_at      DateTime               @updatedAt
+
+  created_by User                       @relation("KnowledgeArticleCreatedBy", fields: [created_by_id], references: [id])
+  updated_by User                       @relation("KnowledgeArticleUpdatedBy", fields: [updated_by_id], references: [id])
+  categories KnowledgeArticleCategory[]
+  chunks     KnowledgeChunk[]
+
+  @@index([status, deleted_at])
+  @@map("knowledge_articles")
+}
+
+model KnowledgeArticleCategory {
+  id          String   @id @default(uuid())
+  article_id  String
+  category_id String
+  created_at  DateTime @default(now())
+
+  article  KnowledgeArticle @relation(fields: [article_id], references: [id], onDelete: Cascade)
+  category Category         @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@unique([article_id, category_id])
+  @@index([category_id])
+  @@map("knowledge_article_categories")
+}
+
+// Trecho do artigo usado na busca vetorial (text-embedding-3-small, 1536 dimensões).
+// Prisma não lê nem grava `embedding`: use SQL cru. Índice HNSW feito à mão apareceria
+// como DROP em migrate diff e db push, porque o schema não sabe representá-lo.
+model KnowledgeChunk {
+  id         String                       @id @default(uuid())
+  article_id String
+  position   Int
+  text       String
+  embedding  Unsupported("vector(1536)")?
+  created_at DateTime                     @default(now())
+  updated_at DateTime                     @updatedAt
+
+  article KnowledgeArticle @relation(fields: [article_id], references: [id], onDelete: Cascade)
+
+  @@unique([article_id, position])
+  @@map("knowledge_chunks")
+}
+
+// Pergunta feita à IA e o que ela respondeu. ticket_id é opcional porque a sugestão
+// acontece antes do chamado existir; SetNull porque a lixeira expurga o chamado com
+// DELETE e a interação precisa continuar nos relatórios.
+model AiInteraction {
+  id         String                 @id @default(uuid())
+  ticket_id  String?
+  user_id    String
+  org_id     String?
+  question   String
+  answer     String?
+  confidence Float?
+  /// Artigos usados na resposta.
+  sources    Json                   @default("[]")
+  feedback   AiInteractionFeedback?
+  accepted   Boolean                @default(false)
+  created_at DateTime               @default(now())
+  updated_at DateTime               @updatedAt
+
+  ticket Ticket?       @relation(fields: [ticket_id], references: [id], onDelete: SetNull)
+  user   User          @relation(fields: [user_id], references: [id])
+  org    Organization? @relation(fields: [org_id], references: [id], onDelete: SetNull)
+
+  @@index([created_at])
+  @@index([user_id, created_at])
+  @@index([org_id, created_at])
+  @@index([ticket_id])
+  @@map("ai_interactions")
+}
+
+// ── Documentos: espaços, páginas aninhadas e edição em tempo real (Yjs) ──────
+
+enum DocSpaceVisibility {
+  private
+  internal
+}
+
+enum DocSpaceRole {
+  owner
+  editor
+  viewer
+}
+
+model DocSpace {
+  id            String             @id @default(uuid())
+  name          String
+  icon          String?
+  color         String?
+  description   String?
+  /// internal: quem tem o módulo lê; editar continua sendo só de membros.
+  visibility    DocSpaceVisibility @default(private)
+  created_by_id String?
+  archived_at   DateTime?
+  created_at    DateTime           @default(now())
+  updated_at    DateTime           @updatedAt
+
+  created_by User?            @relation("DocSpaceCreatedBy", fields: [created_by_id], references: [id], onDelete: SetNull)
+  members    DocSpaceMember[]
+  pages      DocPage[]
+
+  @@map("doc_spaces")
+}
+
+model DocSpaceMember {
+  id         String       @id @default(uuid())
+  space_id   String
+  user_id    String
+  role       DocSpaceRole @default(viewer)
+  created_at DateTime     @default(now())
+
+  space DocSpace @relation(fields: [space_id], references: [id], onDelete: Cascade)
+  user  User     @relation("DocSpaceMemberUser", fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([space_id, user_id])
+  @@index([user_id])
+  @@map("doc_space_members")
+}
+
+model DocPage {
+  id            String    @id @default(uuid())
+  space_id      String
+  parent_id     String?
+  title         String    @default("Sem título")
+  icon          String?
+  position      Float     @default(0)
+  /// Estado Yjs (binário). Nunca vai em JSON: só pelo tempo real e em /versions/:id/ydoc.
+  ydoc          Bytes?
+  /// Texto extraído do ydoc, para a busca.
+  content_text  String    @default("")
+  revision      Int       @default(0)
+  created_by_id String?
+  updated_by_id String?
+  deleted_at    DateTime?
+  deleted_by_id String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  space       DocSpace         @relation(fields: [space_id], references: [id], onDelete: Cascade)
+  parent      DocPage?         @relation("DocPageTree", fields: [parent_id], references: [id], onDelete: SetNull)
+  children    DocPage[]        @relation("DocPageTree")
+  created_by  User?            @relation("DocPageCreatedBy", fields: [created_by_id], references: [id], onDelete: SetNull)
+  updated_by  User?            @relation("DocPageUpdatedBy", fields: [updated_by_id], references: [id], onDelete: SetNull)
+  deleted_by  User?            @relation("DocPageDeletedBy", fields: [deleted_by_id], references: [id], onDelete: SetNull)
+  versions    DocPageVersion[]
+  favorites   DocFavorite[]
+  attachments DocAttachment[]
+
+  @@index([space_id, parent_id, position])
+  @@index([parent_id])
+  @@index([deleted_at])
+  @@index([space_id, updated_at])
+  @@map("doc_pages")
+}
+
+model DocPageVersion {
+  id            String   @id @default(uuid())
+  page_id       String
+  /// Título da página no momento da versão.
+  title         String
+  /// Nome dado por quem salvou; null = versão automática.
+  label         String?
+  ydoc          Bytes
+  created_by_id String?
+  created_at    DateTime @default(now())
+
+  page       DocPage @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  created_by User?   @relation("DocPageVersionCreatedBy", fields: [created_by_id], references: [id], onDelete: SetNull)
+
+  @@index([page_id, created_at])
+  @@map("doc_page_versions")
+}
+
+model DocFavorite {
+  user_id    String
+  page_id    String
+  created_at DateTime @default(now())
+
+  user User    @relation("DocFavoriteUser", fields: [user_id], references: [id], onDelete: Cascade)
+  page DocPage @relation(fields: [page_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, page_id])
+  @@index([page_id])
+  @@map("doc_favorites")
+}
+
+model DocAttachment {
+  id            String   @id @default(uuid())
+  page_id       String
+  /// Espaço atual da página (acompanha a mudança de espaço).
+  space_id      String
+  filename      String
+  mime          String
+  size          Int
+  /// Nome do blob ou data URI, como services/uploads guarda.
+  storage_key   String
+  created_by_id String?
+  created_at    DateTime @default(now())
+
+  page       DocPage @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  created_by User?   @relation("DocAttachmentCreatedBy", fields: [created_by_id], references: [id], onDelete: SetNull)
+
+  @@index([page_id])
+  @@index([space_id])
+  @@map("doc_attachments")
+}

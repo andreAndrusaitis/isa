@@ -1,0 +1,107 @@
+{
+  "email": {
+    "name": "E-mail",
+    "aliases": ["Correio eletrônico", "Caixa de e-mail"],
+    "description": "programa de e-mail, caixa compartilhada, lista de distribuição, encaminhamento, arquivo morto, webmail"
+  },
+  "licencas": {
+    "name": "Licenças de software",
+    "aliases": ["Licenciamento", "Assinaturas de software"],
+    "description": "atribuir, remover ou comprar licenças, relatórios de licenças"
+  },
+  "identidade_acesso": {
+    "name": "Acessos e senhas",
+    "aliases": ["Identidade", "Contas e autenticação"],
+    "description": "senha, login, verificação em duas etapas, bloqueio de conta, permissões"
+  },
+  "usuarios_ciclo_vida": {
+    "name": "Entrada e saída de pessoas",
+    "aliases": ["Ciclo de vida de usuários", "Admissão e desligamento"],
+    "description": "criação de usuário, admissão, mudança de área, desligamento, bloqueio de acessos"
+  },
+  "reunioes_chat": {
+    "name": "Chat e reuniões",
+    "aliases": ["Videoconferência", "Mensagens"],
+    "description": "chat, reuniões online, gravação, transcrição, telefonia, equipes e canais"
+  },
+  "sites_documentos": {
+    "name": "Sites e documentos",
+    "aliases": ["Portal interno", "Bibliotecas de documentos"],
+    "description": "sites internos, bibliotecas, permissões de pastas, versões de documentos"
+  },
+  "arquivos_nuvem": {
+    "name": "Arquivos na nuvem",
+    "aliases": ["Sincronização de arquivos", "Armazenamento pessoal"],
+    "description": "sincronização de arquivos, espaço, recuperação de arquivos, compartilhamento"
+  },
+  "programas_escritorio": {
+    "name": "Programas de escritório",
+    "aliases": ["Editor de texto e planilha", "Pacote de escritório"],
+    "description": "editor de texto, planilha, apresentação, instalação e ativação, suplementos"
+  },
+  "assistentes_ia": {
+    "name": "Assistentes de IA",
+    "aliases": ["IA generativa", "Agentes de IA"],
+    "description": "assistentes de IA no trabalho, acesso, uso e agentes"
+  },
+  "relatorios_automacao": {
+    "name": "Relatórios e automações",
+    "aliases": ["Painéis e indicadores", "Automação de processos"],
+    "description": "painéis, indicadores, formulários, automação de tarefas e integrações simples"
+  },
+  "computadores_gerenciados": {
+    "name": "Gestão de computadores",
+    "aliases": ["Políticas de computador", "Configuração remota"],
+    "description": "políticas, conformidade, preparação e configuração remota de computadores"
+  },
+  "dispositivos_moveis": {
+    "name": "Celulares e tablets",
+    "aliases": ["Dispositivos móveis", "Aplicativos corporativos no celular"],
+    "description": "cadastro de celular, PIN, aplicativos corporativos, perda ou troca de aparelho"
+  },
+  "equipamentos": {
+    "name": "Equipamentos",
+    "aliases": ["Computadores e periféricos", "Hardware"],
+    "description": "notebook, desktop, monitor, periféricos, impressora, instalação de programa, formatação"
+  },
+  "antivirus": {
+    "name": "Antivírus",
+    "aliases": ["Proteção do computador", "Proteção de endpoint"],
+    "description": "antivírus, licença, atualização, quarentena, exceções e bloqueios"
+  },
+  "seguranca": {
+    "name": "Segurança",
+    "aliases": ["Segurança da informação", "Incidentes de segurança"],
+    "description": "e-mail suspeito, conta comprometida, vulnerabilidades, bloqueio de sites, auditoria"
+  },
+  "firewall_vpn": {
+    "name": "Firewall e VPN",
+    "aliases": ["Acesso remoto", "Conexão externa"],
+    "description": "VPN, acesso remoto, liberação de portas, certificados"
+  },
+  "rede_internet": {
+    "name": "Rede e internet",
+    "aliases": ["Conectividade", "Wi-Fi"],
+    "description": "internet, Wi-Fi, cabeamento, DNS, endereço IP, link de operadora"
+  },
+  "servidores": {
+    "name": "Servidores",
+    "aliases": ["Servidores locais", "Infraestrutura de servidores"],
+    "description": "servidores, diretório local, pastas de rede, servidor de impressão"
+  },
+  "nuvem": {
+    "name": "Infraestrutura em nuvem",
+    "aliases": ["Nuvem", "Máquinas virtuais"],
+    "description": "máquinas virtuais, armazenamento, custos e consumo, publicação, acesso a recursos"
+  },
+  "backup": {
+    "name": "Backup",
+    "aliases": ["Cópia de segurança", "Restauração"],
+    "description": "falha de backup, restauração, retenção"
+  },
+  "sistemas_negocio": {
+    "name": "Sistemas e aplicações",
+    "aliases": ["Aplicações de terceiros", "Sistemas internos"],
+    "description": "sistema de gestão, gestão de documentos, portal de chamados, sistemas de terceiros"
+  }
+}

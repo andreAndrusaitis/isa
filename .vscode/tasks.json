@@ -1,0 +1,154 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ── Inicia o Vite dev server ──────────────────────────────────────────────
+    // Usado como preLaunchTask pelas configs de debug do frontend.
+    // O problemMatcher detecta quando o Vite está pronto e libera o debugger.
+    {
+      "label": "Start Frontend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": [
+          {
+            "regexp": "^(?:VITE|vite).*$",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in|Local:"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "devServers",
+        "label": "Vite — Frontend"
+      }
+    },
+    {
+      "label": "Start Frontend (Network)",
+      "type": "shell",
+      "command": "npm run dev -- --host",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": [
+          {
+            "regexp": "^(?:VITE|vite).*$",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in|Local:|Network:"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "devServers",
+        "label": "Vite — Frontend (Rede)"
+      }
+    },
+
+    // ── Inicia o backend (sem debugger, modo terminal) ────────────────────────
+    // Use esta task quando quiser rodar o backend SEM breakpoints (mais rápido).
+    // Para debug com breakpoints, use a config "Backend" no painel Run & Debug.
+    {
+      "label": "Start Backend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "tsx",
+        "pattern": [
+          {
+            "regexp": ".",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "rodando em"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "devServers",
+        "label": "Node — Backend"
+      }
+    },
+
+    // ── Roda migrations do Prisma ─────────────────────────────────────────────
+    {
+      "label": "Prisma: migrate dev",
+      "type": "shell",
+      "command": "npx prisma migrate dev",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+
+    // ── Roda o seed ───────────────────────────────────────────────────────────
+    {
+      "label": "Prisma: seed",
+      "type": "shell",
+      "command": "npx prisma db seed",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+
+    // ── Testes ────────────────────────────────────────────────────────────────
+    {
+      "label": "Test: Backend",
+      "type": "shell",
+      "command": "npm test",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test: Frontend",
+      "type": "shell",
+      "command": "npm test",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    // ── Prisma Studio ─────────────────────────────────────────────────────────
+    {
+      "label": "Prisma: studio",
+      "type": "shell",
+      "command": "npx prisma studio",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ]
+}

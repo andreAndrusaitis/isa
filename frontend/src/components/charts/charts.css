@@ -1,0 +1,86 @@
+/* Kit de gráficos. Animações desligam com "reduzir movimento". */
+.isa-chart-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: isa-chart-draw .8s ease-out forwards; }
+@keyframes isa-chart-draw { to { stroke-dashoffset: 0; } }
+
+.isa-chart-fade { opacity: 0; animation: isa-chart-fade .5s ease-out forwards; }
+@keyframes isa-chart-fade { to { opacity: 1; } }
+
+.isa-chart-grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); animation: isa-chart-grow .5s ease-out forwards; }
+@keyframes isa-chart-grow { to { transform: scaleY(1); } }
+
+.isa-chart-tip { transition: left .14s cubic-bezier(.16, 1, .3, 1), top .14s cubic-bezier(.16, 1, .3, 1), opacity .12s; pointer-events: none; }
+
+.isa-chart-focus:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* A tabela invisível (absolute) fica presa ao gráfico. */
+.chart { position: relative; }
+
+/* Linha de barra: rótulo, barra sem trilho com o valor logo depois dela, participação na ponta. */
+.chart-rows { list-style: none; margin: 0; padding: 0; }
+.chart-row { display: grid; grid-template-columns: minmax(0, var(--label-w, 140px)) minmax(0, 1fr) auto; align-items: center; gap: 4px 14px; width: 100%; padding: 8px 0; border: 0; border-top: 1px solid var(--border); background: none; color: var(--text-1); font: 400 14px/1.35 var(--font); text-align: left; }
+.chart-rows > :first-child > .chart-row, .chart-rows > .chart-row:first-child { border-top: 0; }
+button.chart-row { cursor: pointer; }
+.chart-row:hover { background: var(--tint); }
+.chart-row > small, .chart-share { font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.chart-row > small { grid-column: 1 / -1; margin-top: -2px; }
+.chart-share { min-width: 38px; text-align: right; }
+.chart-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chart-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.chart-track > i { display: flex; gap: 1px; flex-shrink: 0; height: 14px; min-width: 2px; transform-origin: 0 50%; animation: isa-chart-widen .5s ease-out; }
+.chart-track > i > i { min-width: 2px; }
+.chart-track > b { flex-shrink: 0; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+@keyframes isa-chart-widen { from { transform: scaleX(0); } }
+.chart-group { padding: 14px 0 4px; font-size: 13px; color: var(--text-3); }
+.chart-rows > .chart-group:first-child { padding-top: 0; }
+
+/* Barra única de 100%, com a legenda em linhas */
+.chart-total { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; color: var(--text-2); font-size: 13.5px; min-width: 0; }
+.chart-total > b { font-size: 28px; font-weight: 400; letter-spacing: -0.02em; color: var(--text-1); }
+.chart-stack { display: flex; gap: 1px; height: 18px; margin-bottom: 8px; }
+.chart-stack > * { min-width: 2px; transition: opacity .15s; }
+.chart-mark { width: 9px; height: 9px; flex-shrink: 0; }
+.chart-empty { margin: 0; padding: 14px 0; font-size: 13.5px; color: var(--text-3); }
+
+.chart-crumbs { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 8px; font-size: 13px; color: var(--text-3); }
+.chart-crumbs button { border: 0; padding: 0; background: none; color: var(--accent-fg); font: inherit; cursor: pointer; }
+.chart-crumbs strong { font-weight: 500; color: var(--text-1); }
+
+@media (max-width: 520px) { .chart-row { grid-template-columns: minmax(0, 1fr) auto; } .chart-row > .chart-track { grid-column: 1 / -1; grid-row: 2; } }
+@media (prefers-reduced-motion: reduce) {
+  .isa-chart-draw, .isa-chart-fade, .isa-chart-grow, .chart-track > i { animation: none; stroke-dashoffset: 0; opacity: 1; transform: none; }
+  .isa-chart-tip, .chart-stack > * { transition: none; }
+}
+
+.chart-track > i { border-radius: 0 99px 99px 0; }
+.ribbon { display: flex; gap: 3px; height: 46px; }
+.ribbon > i { flex-basis: 0; min-width: 6px; display: grid; place-items: center; border-radius: var(--r-sm); color: #fff; font: 600 13px var(--font); overflow: hidden; }
+.ribbon-legend { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 24px; }
+.ribbon-legend li > * { display: inline-flex; align-items: center; gap: 8px; padding: 2px 0; border: 0; background: none; font: 400 14px/1.4 var(--font); color: var(--text-2); }
+.ribbon-legend button { cursor: pointer; }
+.ribbon-legend button:hover { color: var(--text-1); text-decoration: underline; }
+.ribbon-legend i { width: 12px; height: 12px; border-radius: 4px; }
+.ribbon-legend b { font-weight: 600; color: var(--text-1); }
+.treemap { position: relative; margin: -3px; }
+.treemap > div { position: absolute; padding: 3px; }
+.treemap > div > div { height: 100%; display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; overflow: hidden; border-radius: var(--r-md); background: color-mix(in srgb, var(--tone) 88%, #000); color: #fff; font-size: 13.5px; }
+.treemap span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.treemap b { font-size: 26px; font-weight: 600; line-height: 1.1; }
+.treemap small { opacity: .85; font-size: 13px; }
+.columns { display: flex; align-items: flex-end; gap: 18px; }
+.columns > div { flex: 1; display: grid; justify-items: center; gap: 8px; font-size: 14px; color: var(--text-2); }
+.columns b { font-size: 20px; font-weight: 600; color: var(--text-1); }
+.columns i { width: 100%; max-width: 96px; border-radius: var(--r-md) var(--r-md) 4px 4px; transform-origin: 50% 100%; animation: isa-chart-grow .5s ease-out; }
+
+.donut { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px 24px; }
+.donut svg { width: 188px; height: 188px; flex-shrink: 0; }
+.donut circle { transition: stroke-width .15s, opacity .15s; }
+.donut-n { font: 600 30px var(--font); fill: var(--text-1); }
+.donut-l { font: 400 12.5px var(--font); fill: var(--text-3); }
+.donut ul { flex: 1 1 200px; list-style: none; margin: 0; padding: 0; }
+.donut li > * { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto 40px; align-items: center; gap: 10px; width: 100%; min-height: 34px; padding: 0 8px; border: 0; border-radius: 8px; background: none; color: var(--text-2); font: 400 14px var(--font); text-align: left; }
+.donut li > button { cursor: pointer; }
+.donut li > button:hover { background: var(--accent-soft); color: var(--text-1); }
+.donut li i { width: 10px; height: 10px; border-radius: 3px; }
+.donut li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.donut li b { font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; }
+.donut li em { font-style: normal; font-size: 13px; color: var(--text-3); text-align: right; font-variant-numeric: tabular-nums; }

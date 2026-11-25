@@ -1,0 +1,81 @@
+/* Telas de Sistema: uma coluna, seções com fio em cima, linhas no lugar de blocos. */
+.adm { flex: 1; min-width: 0; min-height: 0; overflow: auto; }
+.adm-body { padding: 0 var(--page-gutter) 56px; display: flex; flex-direction: column; gap: 36px; }
+.adm-h { margin: 0; font-size: 18px; font-weight: 500; color: var(--text-1); }
+.adm-note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-3); }
+.adm-section > .adm-h { padding: 16px 0; }
+.adm-section > .adm-h + .adm-note { margin: -12px 0 16px; }
+.adm-section.panel > .setting:first-child { border-top: 0; }
+/* O vazio compartilhado já traz a margem da página */
+.adm-scroll { overflow-x: auto; }
+.adm-sub { margin-top: 2px; font-size: 13px; color: var(--text-3); }
+.adm-mono { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; }
+.adm-clip { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-actions { display: flex; align-items: center; justify-content: flex-end; gap: 2px; }
+.adm-error { margin: 0; color: var(--danger); font-size: 13.5px; }
+.adm-save { display: flex; gap: 8px; flex-wrap: wrap; padding: 24px 0 0 348px; border-top: 1px solid var(--border); }
+@media (max-width: 860px) { .adm-save { padding-left: 0; } }
+
+/* Controles do ajuste: largura de leitura, um embaixo do outro */
+.setting-control { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; max-width: 520px; min-width: 0; overflow-wrap: anywhere; }
+.setting-control > input, .setting-control > select, .setting-control > textarea, .setting-control > div { width: 100%; }
+
+/* Link para o chamado dentro de linhas */
+.adm-link { display: inline-flex; align-items: baseline; gap: 10px; max-width: 100%; min-width: 0; min-height: 24px; padding: 0; border: 0; background: none; font: 400 14px/1.4 var(--font); color: var(--text-1); text-align: left; cursor: pointer; }
+.adm-link > :first-child { color: var(--accent-fg); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.adm-link:hover > :first-child { text-decoration: underline; }
+.adm-link > :nth-child(2) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Filtros em linha: rótulo em cima do campo, sem faixa nem borda */
+.adm-filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 20px; padding: 16px 0; }
+.adm-filters label, .adm-filters .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 13px; color: var(--text-3); }
+.adm-filters input { height: 34px; padding: 0 8px; border: 1px solid var(--field-line); background: var(--bg-input); color: var(--text-1); font: 400 13.5px var(--font); }
+.adm-filters .grow { flex: 1 1 200px; max-width: 320px; }
+.adm-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-bottom: 8px; }
+.adm-tools > .push { margin-left: auto; }
+
+/* Linha de histórico: de quem à esquerda, o que aconteceu à direita */
+.adm-rows { list-style: none; margin: 0; padding: 0; }
+.adm-rows > li { display: grid; grid-template-columns: minmax(200px, 340px) minmax(0, 1fr); gap: 6px 40px; padding: 16px 0; border-top: 1px solid var(--border); font-size: 14px; }
+.adm-rows ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+@media (max-width: 860px) { .adm-rows > li { grid-template-columns: minmax(0, 1fr); } }
+
+/* Motor IA */
+.ai-engine .figure-value { font-size: 22px; white-space: nowrap; }
+.ai-mode { flex-wrap: nowrap; margin-left: -10px; }
+.ai-mode > button { padding: 6px 10px; font-size: 13px; }
+.ai-mode > button:disabled { cursor: wait; opacity: .6; }
+.ai-agent-actions { display: flex; flex-direction: column; align-items: flex-start; margin-left: -10px; }
+.ai-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-width: 0; }
+.ai-line small, .adm-rows small { font-size: 13px; color: var(--text-3); }
+.ai-decisions { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px 28px; margin-top: 12px; }
+.ai-summary { display: grid; gap: 24px 48px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); padding-bottom: 28px; font-size: 14px; }
+.ai-summary > div { min-width: 0; }
+.ai-summary .adm-note { padding-bottom: 6px; }
+.ai-summary .ai-line { padding: 7px 0; border-top: 1px solid var(--border); }
+.ai-summary ol { list-style: none; margin: 0; padding: 0; }
+
+/* Aparência */
+.adm-previews { display: flex; flex-wrap: wrap; gap: 20px 40px; }
+.adm-preview { flex: 1 1 320px; min-width: 0; display: grid; grid-template-columns: 148px minmax(0, 1fr); background: var(--bg-elevated); color: var(--text-1); font-size: 13px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+.adm-preview-side { display: flex; flex-direction: column; gap: 4px; padding: 14px 10px 24px; background: var(--bg-sidebar); color: var(--sidebar-text); }
+.adm-preview-side > :first-child { margin: 0 0 10px 6px; }
+.adm-preview-side > span { padding: 8px 10px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-preview-side > .on { background: var(--sidebar-active); color: var(--sidebar-accent); font-weight: 600; }
+.adm-preview-main { min-width: 0; padding: 16px; }
+.adm-preview-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 14px; }
+.adm-preview-top b { font-size: 17px; font-weight: 600; }
+.adm-preview-top span { padding: 8px 14px; border-radius: 10px; background: var(--accent); color: var(--on-accent); font-weight: 600; white-space: nowrap; }
+.adm-preview-card { padding: 4px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); }
+.adm-preview-row { display: flex; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border); }
+.adm-preview-row:first-child { border-top: 0; }
+.adm-preview-row > :first-child { color: var(--accent-fg); font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.adm-palettes { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 2px; max-width: 520px; margin: -12px 0 0 -12px; }
+.adm-palettes > button { display: grid; gap: 8px; padding: 12px; border: 0; border-radius: 12px; background: none; text-align: left; font: 400 13.5px var(--font); color: var(--text-2); cursor: pointer; }
+.adm-palettes > button:hover { background: var(--hover-overlay); }
+.adm-palettes > [aria-pressed="true"] { background: var(--accent-soft); color: var(--text-1); font-weight: 600; }
+.adm-palettes span { display: grid; grid-template-columns: 2fr 1fr 1fr; height: 26px; border-radius: 8px; overflow: hidden; }
+
+/* Checklist: a pergunta e o critério mandam na altura da linha */
+.intake-table { min-width: 680px; table-layout: fixed; }
+.table.intake-table td { vertical-align: top; overflow-wrap: anywhere; }

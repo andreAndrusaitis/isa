@@ -1,0 +1,23 @@
+/* Filtros das listas: botão em texto, filtros em uso por extenso e painel reto. */
+.filter-trigger { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 14px; font-size: 13.5px; color: var(--text-2); }
+.filter-trigger > button { min-height: 34px; padding: 0 14px; border: 0; background: var(--btn-tint); color: var(--text-1); font: 500 13.5px var(--font); cursor: pointer; }
+.filter-trigger > button[aria-expanded="true"] { background: var(--accent-soft); color: var(--accent-fg); }
+.filter-trigger > span { display: inline-flex; align-items: center; gap: 8px; }
+.filter-trigger > span > button { padding: 4px 0; border: 0; background: none; color: var(--accent-fg); font: 400 13.5px var(--font); cursor: pointer; display: inline-flex; }
+.filter-trigger > span > button:hover { text-decoration: underline; }
+.filter-trigger b { font-weight: 600; }
+
+.filter-search { position: relative; max-width: 100%; }
+.filter-search > svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-3); pointer-events: none; }
+.filter-search > input { width: 100%; height: 34px; padding: 0 10px 0 32px; border: 1px solid var(--field-line); background: var(--bg-input); color: var(--text-1); font: 400 13.5px var(--font); }
+
+.filter-panel { position: fixed; z-index: 10000; padding: 16px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-strong); box-shadow: var(--pop-shadow); }
+.filter-panel > div + div { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.filter-panel input[type="date"], .filter-panel input[type="text"] { width: 100%; height: 32px; padding: 0 8px; border: 1px solid var(--field-line); background: var(--bg-input); color: var(--text-1); font: 400 13px var(--font); }
+.filter-label { display: block; margin-bottom: 4px; font-size: 13px; color: var(--text-2); }
+.filter-fields { display: flex; flex-direction: column; gap: 12px; }
+.filter-saved { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 0; font-size: 13.5px; color: var(--text-1); overflow-wrap: anywhere; cursor: pointer; }
+.filter-saved:hover { color: var(--accent-fg); }
+.filter-link { padding: 4px 0; border: 0; background: none; color: var(--accent-fg); font: 400 13.5px var(--font); cursor: pointer; }
+.filter-actions { display: flex; gap: 8px; }
+.filter-actions > :last-child { flex: 1; }

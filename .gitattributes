@@ -1,0 +1,2 @@
+# O bash do Windows quebra com CRLF no script.
+backend/e2e/run-integration.sh text eol=lf

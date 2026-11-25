@@ -1,0 +1,14 @@
+# Varredura de segredos da integração contínua. Regras padrão do gitleaks
+# + exceções para arquivos que usam credenciais falsas de propósito.
+# docs/ continua varrido: é onde um token real colado tem mais chance de aparecer.
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Senhas/tokens fictícios de testes, E2E e cenários do eval de IA"
+paths = [
+  '''\.test\.tsx?$''',
+  '''(^|/)e2e/''',
+  '''(^|/)backend/src/ai/eval/''',
+]

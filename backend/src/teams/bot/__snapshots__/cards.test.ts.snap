@@ -1,0 +1,552 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`agentReplyCard > traz número, trecho e campo de resposta com Responder 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "data": {
+        "acao": "responder",
+        "ticketId": "t-1",
+      },
+      "style": "positive",
+      "title": "Responder",
+      "type": "Action.Submit",
+    },
+    {
+      "title": "Abrir no portal",
+      "type": "Action.OpenUrl",
+      "url": "https://isa.example.com/chamados/t-1",
+    },
+  ],
+  "body": [
+    {
+      "size": "Medium",
+      "text": "Maria respondeu o chamado ISA-000123",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "None",
+      "text": "VPN caiu",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "items": [
+        {
+          "text": "Olá! Pode testar de novo? Reiniciei o túnel.",
+          "type": "TextBlock",
+          "wrap": true,
+        },
+      ],
+      "style": "emphasis",
+      "type": "Container",
+    },
+    {
+      "errorMessage": "Escreva a resposta antes de enviar",
+      "id": "resposta",
+      "isMultiline": true,
+      "isRequired": true,
+      "label": "Sua resposta",
+      "placeholder": "Escreva aqui para responder ao analista",
+      "type": "Input.Text",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`categoryCard > monta a grade 2 por linha com um Action.Submit por categoria 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "size": "Medium",
+      "text": "Abrir chamado",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "Small",
+      "text": "Escolha a categoria do seu pedido:",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "columns": [
+        {
+          "items": [
+            {
+              "items": [
+                {
+                  "text": "☁ Rede e VPN",
+                  "type": "TextBlock",
+                  "weight": "Bolder",
+                  "wrap": true,
+                },
+                {
+                  "isSubtle": true,
+                  "maxLines": 2,
+                  "spacing": "Small",
+                  "text": "Assinaturas e recursos",
+                  "type": "TextBlock",
+                  "wrap": true,
+                },
+              ],
+              "selectAction": {
+                "data": {
+                  "acao": "categoria",
+                  "id": "c1",
+                },
+                "title": "Rede e VPN",
+                "type": "Action.Submit",
+              },
+              "style": "emphasis",
+              "type": "Container",
+            },
+          ],
+          "type": "Column",
+          "width": "stretch",
+        },
+        {
+          "items": [
+            {
+              "items": [
+                {
+                  "text": "🛡 Segurança",
+                  "type": "TextBlock",
+                  "weight": "Bolder",
+                  "wrap": true,
+                },
+              ],
+              "selectAction": {
+                "data": {
+                  "acao": "categoria",
+                  "id": "c2",
+                },
+                "title": "Segurança",
+                "type": "Action.Submit",
+              },
+              "style": "emphasis",
+              "type": "Container",
+            },
+          ],
+          "type": "Column",
+          "width": "stretch",
+        },
+      ],
+      "spacing": "Small",
+      "type": "ColumnSet",
+    },
+    {
+      "columns": [
+        {
+          "items": [
+            {
+              "items": [
+                {
+                  "altText": "E-mail e colaboração",
+                  "size": "Small",
+                  "type": "Image",
+                  "url": "https://cdn.exemplo.com/email.png",
+                },
+                {
+                  "text": "E-mail e colaboração",
+                  "type": "TextBlock",
+                  "weight": "Bolder",
+                  "wrap": true,
+                },
+              ],
+              "selectAction": {
+                "data": {
+                  "acao": "categoria",
+                  "id": "c3",
+                },
+                "title": "E-mail e colaboração",
+                "type": "Action.Submit",
+              },
+              "style": "emphasis",
+              "type": "Container",
+            },
+          ],
+          "type": "Column",
+          "width": "stretch",
+        },
+        {
+          "items": [],
+          "type": "Column",
+          "width": "stretch",
+        },
+      ],
+      "spacing": "Small",
+      "type": "ColumnSet",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`categoryCard > sem categorias avisa em vez de mostrar grade vazia 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "size": "Medium",
+      "text": "Abrir chamado",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "Small",
+      "text": "Nenhuma categoria disponível para você no momento.",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`confirmationCard > mostra o resumo e os fatos, com Confirmar/Cancelar levando a ferramenta 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "data": {
+        "acao": "confirmar",
+        "tool": "abrir_chamado",
+      },
+      "style": "positive",
+      "title": "Confirmar",
+      "type": "Action.Submit",
+    },
+    {
+      "data": {
+        "acao": "cancelar",
+        "tool": "abrir_chamado",
+      },
+      "style": "destructive",
+      "title": "Cancelar",
+      "type": "Action.Submit",
+    },
+  ],
+  "body": [
+    {
+      "size": "Medium",
+      "text": "Confirma esta ação?",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "text": "Abrir chamado "VPN caiu" em Infra › VPN",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "facts": [
+        {
+          "title": "Prioridade",
+          "value": "Média",
+        },
+      ],
+      "type": "FactSet",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`subcategoryCard > lista as subcategorias com data de subcategoria e botão de voltar 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "data": {
+        "acao": "categorias",
+      },
+      "title": "Voltar às categorias",
+      "type": "Action.Submit",
+    },
+  ],
+  "body": [
+    {
+      "size": "Medium",
+      "text": "☁ Rede e VPN",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "Small",
+      "text": "Agora escolha o assunto:",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "columns": [
+        {
+          "items": [
+            {
+              "items": [
+                {
+                  "text": "Criar recurso",
+                  "type": "TextBlock",
+                  "weight": "Bolder",
+                  "wrap": true,
+                },
+              ],
+              "selectAction": {
+                "data": {
+                  "acao": "subcategoria",
+                  "categoryId": "c1",
+                  "id": "s1",
+                },
+                "title": "Criar recurso",
+                "type": "Action.Submit",
+              },
+              "style": "emphasis",
+              "type": "Container",
+            },
+          ],
+          "type": "Column",
+          "width": "stretch",
+        },
+        {
+          "items": [
+            {
+              "items": [
+                {
+                  "text": "Custos",
+                  "type": "TextBlock",
+                  "weight": "Bolder",
+                  "wrap": true,
+                },
+                {
+                  "isSubtle": true,
+                  "maxLines": 2,
+                  "spacing": "Small",
+                  "text": "Fatura e orçamento",
+                  "type": "TextBlock",
+                  "wrap": true,
+                },
+              ],
+              "selectAction": {
+                "data": {
+                  "acao": "subcategoria",
+                  "categoryId": "c1",
+                  "id": "s2",
+                },
+                "title": "Custos",
+                "type": "Action.Submit",
+              },
+              "style": "emphasis",
+              "type": "Container",
+            },
+          ],
+          "type": "Column",
+          "width": "stretch",
+        },
+      ],
+      "spacing": "Small",
+      "type": "ColumnSet",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`ticketFormCard > subcategoria comum pede título e descrição obrigatórios 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "data": {
+        "acao": "abrir",
+        "subcategoryId": "sub-vpn",
+      },
+      "style": "positive",
+      "title": "Abrir chamado",
+      "type": "Action.Submit",
+    },
+    {
+      "associatedInputs": "none",
+      "data": {
+        "acao": "categorias",
+      },
+      "title": "Voltar às categorias",
+      "type": "Action.Submit",
+    },
+  ],
+  "body": [
+    {
+      "size": "Medium",
+      "text": "🔐 VPN",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "errorMessage": "Informe um título para o chamado",
+      "id": "titulo",
+      "isRequired": true,
+      "label": "Título",
+      "placeholder": "Resuma o problema ou pedido",
+      "type": "Input.Text",
+    },
+    {
+      "errorMessage": "Descreva o problema ou pedido",
+      "id": "descricao",
+      "isMultiline": true,
+      "isRequired": true,
+      "label": "Descrição",
+      "placeholder": "Conte o que aconteceu, desde quando e quem é afetado",
+      "type": "Input.Text",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;
+
+exports[`ticketFormCard > subcategoria especial usa os campos do formulário dinâmico, sem título/descrição 1`] = `
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "actions": [
+    {
+      "data": {
+        "acao": "abrir",
+        "subcategoryId": "sub-onb",
+      },
+      "style": "positive",
+      "title": "Abrir chamado",
+      "type": "Action.Submit",
+    },
+    {
+      "associatedInputs": "none",
+      "data": {
+        "acao": "categorias",
+      },
+      "title": "Voltar às categorias",
+      "type": "Action.Submit",
+    },
+  ],
+  "body": [
+    {
+      "size": "Medium",
+      "text": "🧑‍💻 Onboarding",
+      "type": "TextBlock",
+      "weight": "Bolder",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "None",
+      "text": "Pessoas",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "isSubtle": true,
+      "spacing": "Small",
+      "text": "Entrada de colaborador",
+      "type": "TextBlock",
+      "wrap": true,
+    },
+    {
+      "errorMessage": "Preencha o campo obrigatório: Nome completo",
+      "id": "sf_nome_completo",
+      "isRequired": true,
+      "label": "Nome completo",
+      "type": "Input.Text",
+    },
+    {
+      "id": "sf_observacoes",
+      "isMultiline": true,
+      "isRequired": false,
+      "label": "Observações",
+      "type": "Input.Text",
+    },
+    {
+      "errorMessage": "Preencha o campo obrigatório: E-mail pessoal",
+      "id": "sf_email_pessoal",
+      "isRequired": true,
+      "label": "E-mail pessoal",
+      "placeholder": "nome@empresa.com.br",
+      "style": "Email",
+      "type": "Input.Text",
+    },
+    {
+      "errorMessage": "Preencha o campo obrigatório: Data de início",
+      "id": "sf_data_inicio",
+      "isRequired": true,
+      "label": "Data de início",
+      "type": "Input.Date",
+    },
+    {
+      "choices": [
+        {
+          "title": "Desenvolvedor",
+          "value": "dev",
+        },
+        {
+          "title": "Gerente de projetos",
+          "value": "gp",
+        },
+      ],
+      "errorMessage": "Preencha o campo obrigatório: Cargo",
+      "id": "sf_cargo",
+      "isMultiSelect": false,
+      "isRequired": true,
+      "label": "Cargo",
+      "placeholder": "Selecione",
+      "style": "compact",
+      "type": "Input.ChoiceSet",
+    },
+    {
+      "choices": [
+        {
+          "title": "VPN",
+          "value": "vpn",
+        },
+        {
+          "title": "ERP (financeiro)",
+          "value": "erp,fin",
+        },
+        {
+          "title": "ERP",
+          "value": "erp",
+        },
+      ],
+      "id": "sf_acessos",
+      "isMultiSelect": true,
+      "isRequired": false,
+      "label": "Acessos",
+      "placeholder": "Selecione",
+      "style": "expanded",
+      "type": "Input.ChoiceSet",
+    },
+    {
+      "id": "sf_legado",
+      "isRequired": false,
+      "label": "Campo antigo",
+      "type": "Input.Text",
+    },
+  ],
+  "type": "AdaptiveCard",
+  "version": "1.5",
+}
+`;

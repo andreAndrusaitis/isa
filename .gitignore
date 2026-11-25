@@ -1,0 +1,40 @@
+# Ambiente
+.env
+.env.*
+!.env.example
+!backend/e2e/.env.integration
+
+# Dependências e build
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.vite/
+.cache/
+.eslintcache
+
+# Testes
+coverage/
+playwright-report/
+test-results/
+
+# Logs
+logs/
+*.log
+
+# Editor e sistema
+.vscode/*
+!.vscode/tasks.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Segredos
+*.pem
+*.key
+
+# Ferramentas locais
+.claude/
+CLAUDE.md
+AGENTS.md
+backend/ai-data/

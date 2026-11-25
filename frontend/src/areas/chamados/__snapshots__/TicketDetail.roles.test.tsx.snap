@@ -1,0 +1,225 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > Gerente 1`] = `
+{
+  "botoes": [
+    "Assumir chamado",
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Escalonar chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > TM, chamado escalonado 1`] = `
+{
+  "botoes": [
+    "Assumir chamado",
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Editar",
+    "Escalonar chamado",
+    "Excluir",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > Ticket Manager 1`] = `
+{
+  "botoes": [
+    "Assumir chamado",
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Editar",
+    "Escalonar chamado",
+    "Excluir",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > admin (só olha) 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Documentos",
+    "Excluir chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista colaborador 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Escalonar chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista com Projetos 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Criar task",
+    "Documentos",
+    "Escalonar chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+    "Vincular a uma task",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista com editar mensagens 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Editar",
+    "Escalonar chamado",
+    "Excluir",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista com excluir chamados 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Escalonar chamado",
+    "Excluir chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista responsável 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Escalonar chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista, chamado resolvido 1`] = `
+{
+  "botoes": [
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Documentos",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+  ],
+  "podeEscrever": false,
+}
+`;
+
+exports[`TicketDetail — o que cada cargo vê (caracterização) > analista, chamado sem responsável 1`] = `
+{
+  "botoes": [
+    "Assumir chamado",
+    "Ações",
+    "Chamados",
+    "Chat ao vivo",
+    "Conversa interna",
+    "Documentos",
+    "Escalonar chamado",
+    "Expandir descrição",
+    "Logs",
+    "Registro",
+    "Resolver chamado",
+    "Responder ao cliente",
+    "Trocar requisitante",
+  ],
+  "podeEscrever": false,
+}
+`;

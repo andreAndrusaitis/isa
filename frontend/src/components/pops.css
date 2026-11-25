@@ -1,0 +1,43 @@
+/* Menus, sino e avisos: folha reta sobre a página */
+.pop { background: var(--bg-card); border: 1px solid var(--border-strong); box-shadow: var(--pop-shadow); color: var(--text-1); font-family: var(--font); border-radius: var(--r-md); }
+.toast-pop { overflow: hidden; }
+
+.user-menu-btn { display: flex; align-items: center; gap: 8px; padding: 4px 6px; border: 0; background: none; font: 500 14px/1.3 var(--font); color: var(--text-1); cursor: pointer; }
+.user-menu-btn > span { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-menu-btn > svg { color: var(--text-3); }
+.user-menu-btn:hover > span { color: var(--accent-fg); }
+.user-menu { position: absolute; top: calc(100% + 10px); right: 0; width: 220px; z-index: 100; }
+.user-menu > div { padding: 14px 16px 12px; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; border-bottom: 1px solid var(--border); }
+.user-menu small { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--text-3); }
+.user-menu > button { display: block; width: 100%; padding: 10px 16px; border: 0; background: none; font: 400 14px/1.3 var(--font); color: var(--text-1); text-align: left; cursor: pointer; }
+.user-menu > button:hover { background: var(--accent-soft); }
+.user-menu > button:last-child { border-top: 1px solid var(--border); }
+
+.bell-count { position: absolute; top: -3px; right: -5px; min-width: 18px; padding: 3px 4px; border-radius: 99px; background: var(--danger); color: var(--bg-card); font-size: 12px; font-weight: 600; line-height: 1; text-align: center; pointer-events: none; }
+.bell-pop { position: absolute; top: calc(100% + 10px); right: 0; width: 380px; max-width: calc(100vw - 24px); max-height: min(70vh, 520px); z-index: 9999; display: flex; flex-direction: column; }
+.bell-head { flex-shrink: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 16px 18px 12px; border-bottom: 1px solid var(--rule); font-size: 18px; font-weight: 500; }
+.bell-head small { margin-left: 10px; font-size: 13px; font-weight: 400; color: var(--text-3); }
+.bell-head button { border: 0; background: none; padding: 0; font: 400 13px/1.3 var(--font); color: var(--accent-fg); cursor: pointer; text-align: right; }
+.bell-head button:hover { text-decoration: underline; }
+.bell-list { flex: 1; min-height: 0; overflow-y: auto; }
+.bell-list > p { padding: 22px 18px; font-size: 14px; color: var(--text-3); }
+.bell-list > button { display: block; width: 100%; padding: 13px 18px; border: 0; background: none; font: 400 13.5px/1.45 var(--font); color: var(--text-2); text-align: left; cursor: pointer; }
+.bell-list > button + button { border-top: 1px solid var(--border); }
+.bell-list > button:hover { background: var(--tint); }
+.bell-list strong { display: block; font-size: 14px; font-weight: 500; color: var(--text-1); overflow-wrap: anywhere; }
+.bell-list span { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
+.bell-list small { display: block; margin-top: 4px; font-size: 12.5px; color: var(--text-3); }
+
+.toast-stack { position: fixed; right: 16px; z-index: 10000; width: 360px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.toast-pop { position: relative; padding: 10px 16px 16px; font-size: 14px; pointer-events: auto; animation: toast-in .18s var(--ease-out); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-6px); } }
+.toast-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--text-3); }
+.toast-head .icon-act, .toast-line .icon-act { margin-right: -8px; flex-shrink: 0; }
+.toast-pop strong { display: block; font-size: 14.5px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toast-pop p { margin-top: 2px; font-size: 13.5px; line-height: 1.45; color: var(--text-2); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.toast-open { margin-top: 10px; border: 0; background: none; padding: 0; font: 500 14px/1.3 var(--font); color: var(--accent-fg); cursor: pointer; }
+.toast-open:hover { text-decoration: underline; }
+.toast-time { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--accent); }
+.toast-line { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 8px 16px; line-height: 1.45; }
+.toast-line > span { padding-block: 6px; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) { .toast-pop { animation: none; } }

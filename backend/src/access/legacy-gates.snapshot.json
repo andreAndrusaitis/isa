@@ -1,0 +1,4523 @@
+{
+ "DELETE /api/categories/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/categories/sub/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/email-logs/blocks/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/escalation/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "escalation",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/integrations/keys/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/integrations/v1/projects/:projectId/members/:userId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/checklist/:itemId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/comments/:commentId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/dependencies/:dependencyId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/documents/:documentId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/tags/:tagId": [],
+ "DELETE /api/integrations/v1/projects/:projectId/tasks/:taskId/tickets/:ticketId": [],
+ "DELETE /api/macros/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "macros",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/manager-links/orgs/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/mcp-tokens/:tokenId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/organizations/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/organizations/:id/authorized-domains/:domainId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "DELETE /api/organizations/:id/served-by/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/projects/:projectId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/members/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/sprints/:sprintId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/statuses/:statusId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/task-types/:taskTypeId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/checklist/:itemId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/comments/:commentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/dependencies/:dependencyId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/documents/:documentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/relations/:relationId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tags/:tagId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/tags/:tagId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/tickets/:ticketId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/tasks/:taskId/watchers/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/:projectId/views/:viewId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/api-keys/:keyId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/projects/global-sprints/:globalSprintId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/projects/me/filters/:filterId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "DELETE /api/projects/nav-folders/:navFolderId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/projects/webhooks/:webhookId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/queues/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/queues/:id/agents/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/routing/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/sla/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "sla",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/survey/questions/:questionId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/survey/templates/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/tickets/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/tickets/:id/messages/:messageId": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "DELETE /api/tickets/:id/permanent": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "trash",
+   "roles": []
+  }
+ ],
+ "DELETE /api/users/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "DELETE /api/webhooks/endpoints/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /": [],
+ "GET /api/access/catalog": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/ai/changes": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/feedback": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/guidance/examples": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/guidance/tickets/:id": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/ai/insights": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/insights/knowledge": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/intake/checklist": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/metrics": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/runs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/status": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/ai/suggest/status": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "user",
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/ai/tickets/:id/triage": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/audit": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "audit",
+   "roles": [
+    "admin",
+    "manager",
+    "supervisor"
+   ]
+  }
+ ],
+ "GET /api/auth/me": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/auto-close/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "auto_close",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/auto-close/logs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "auto_close",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/business-hours": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/categories": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/categories/:id/orgs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/categories/available": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/categories/org-summary": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/dashboard/channels": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/corporations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/inactivity": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/management": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/overview": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/productivity": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/sla-expiring": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/email-logs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/email-logs/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/email-logs/blocks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/email-logs/inbound": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/email-logs/settings": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/escalation": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "GET /api/inactivity/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "inactivity",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/inactivity/logs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "inactivity",
+   "roles": [
+    "admin",
+    "supervisor"
+   ]
+  }
+ ],
+ "GET /api/integrations/keys": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/integrations/keys/:id/requests": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/integrations/keys/scopes": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/integrations/v1/categories": [],
+ "GET /api/integrations/v1/organizations": [],
+ "GET /api/integrations/v1/projects": [],
+ "GET /api/integrations/v1/projects/:projectId": [],
+ "GET /api/integrations/v1/projects/:projectId/attachments": [],
+ "GET /api/integrations/v1/projects/:projectId/custom-fields": [],
+ "GET /api/integrations/v1/projects/:projectId/dashboard": [],
+ "GET /api/integrations/v1/projects/:projectId/documents": [],
+ "GET /api/integrations/v1/projects/:projectId/documents/:documentId": [],
+ "GET /api/integrations/v1/projects/:projectId/folders": [],
+ "GET /api/integrations/v1/projects/:projectId/lists": [],
+ "GET /api/integrations/v1/projects/:projectId/members": [],
+ "GET /api/integrations/v1/projects/:projectId/sprints": [],
+ "GET /api/integrations/v1/projects/:projectId/statuses": [],
+ "GET /api/integrations/v1/projects/:projectId/tags": [],
+ "GET /api/integrations/v1/projects/:projectId/task-types": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/assignees": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/checklist": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/comments": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/dependencies": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/tickets": [],
+ "GET /api/integrations/v1/projects/:projectId/tasks/:taskId/time": [],
+ "GET /api/integrations/v1/projects/:projectId/time": [],
+ "GET /api/integrations/v1/projects/:projectId/workload": [],
+ "GET /api/integrations/v1/queues": [],
+ "GET /api/integrations/v1/subcategories": [],
+ "GET /api/integrations/v1/tickets": [],
+ "GET /api/integrations/v1/tickets/:id": [],
+ "GET /api/integrations/v1/tickets/:id/messages": [],
+ "GET /api/link-preview": [],
+ "GET /api/macros": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "GET /api/macros/variables": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "GET /api/manager-links/my/analysts": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/manager-links/my/orgs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/manager-links/orgs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "organograma",
+   "roles": [
+    "admin",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/mcp-tokens": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/my-tasks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/my-tasks/columns": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/notifications": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/notifications/tasks": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/organizations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/organizations/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager",
+    "user"
+   ]
+  }
+ ],
+ "GET /api/organizations/:id/authorized-domains": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "GET /api/organizations/:id/blocked-categories": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/organizations/:id/queue-access": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/organizations/:id/served-by": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/automations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/automations/:automationId/runs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/custom-fields": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/dashboard": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/docs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/docs/:documentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/drill": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/export": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/files": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/folders": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/insights": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/lists": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/members": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/sprints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/statuses": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tags": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/task-types": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/activity": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/assignees": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/comments": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/completion-check": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/dependencies": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/drill": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/relations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/tickets": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/time": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/tasks/:taskId/watchers": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/time": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/timeline": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/views": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/:projectId/workload": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/access": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/activity": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/api-keys": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/api-keys/:keyId/requests": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/api-scopes": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/cycle-time": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/dashboard-global": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/drill/people/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/drill/tasks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/export": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/global-sprints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/global-sprints/:globalSprintId/overview": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/global-sprints/owners": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/insights": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/linked-tickets": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/me/area": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/me/favorites": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/me/filters": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/my-cycle": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/nav-folders": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/reports/my-projects": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/search": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/projects/team": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/time-summary": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_reports",
+   "roles": [
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/webhook-events": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/webhook-events/:event/example": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/webhook-events/:event/schema": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/webhooks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/projects/webhooks/:webhookId/deliveries": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/queues": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/queues/:id/agents": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/reopen-sla/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "reopen_sla",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/routing": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/routing/project-targets": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/routing/schema": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/sla": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin",
+    "manager",
+    "supervisor",
+    "agent"
+   ]
+  }
+ ],
+ "GET /api/sla/packages": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "packages",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/survey/dashboard": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey_dashboard",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/survey/pending": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/survey/public/:token": [],
+ "GET /api/survey/templates": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/survey/templates/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/survey/templates/active": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/templates": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "GET /api/ticket-types": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/:id": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/:id/family": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/:id/messages": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/:id/survey-link": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/activity": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/counts": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/counts/grouped": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/tickets/trash": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "trash",
+   "roles": []
+  }
+ ],
+ "GET /api/tickets/trash/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "trash",
+   "roles": []
+  }
+ ],
+ "GET /api/users": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/users/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/users/:id/scope": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "GET /api/users/me/stats": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "GET /api/webhooks/endpoints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/webhooks/endpoints/:id/deliveries": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/webhooks/events": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/webhooks/events/:event/example": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/webhooks/events/:event/schema": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /auth/acs": [],
+ "GET /auth/login": [],
+ "GET /auth/logout": [],
+ "GET /health": [],
+ "PATCH /api/ai/guidance/examples/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/ai/guidance/examples/:id/disable": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/auto-close/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "auto_close",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/business-hours": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "business_hours",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/categories/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/categories/sub/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/escalation/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "escalation",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/inactivity/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "inactivity",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/integrations/keys/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/integrations/v1/projects/:projectId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/documents/:documentId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/members/:userId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/sprints/:sprintId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/statuses/:statusId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/task-types/:taskTypeId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/tasks/:taskId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/tasks/:taskId/checklist/:itemId": [],
+ "PATCH /api/integrations/v1/projects/:projectId/tasks/:taskId/comments/:commentId": [],
+ "PATCH /api/integrations/v1/tickets/:id": [],
+ "PATCH /api/integrations/v1/users/:idOrEmail": [],
+ "PATCH /api/macros/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "macros",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/manager-links/analysts/:id/global": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/manager-links/orgs/:id/global": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/notifications/:id/read": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/notifications/read-all": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/notifications/tasks/read-all": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/notifications/ticket/:ticketId/read": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/organizations/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "PATCH /api/organizations/:id/authorized-domains/:domainId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "PATCH /api/projects/:projectId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/automations/:automationId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/docs/:documentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/members/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/sprints/:sprintId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/statuses/:statusId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/statuses/reorder": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/task-types/:taskTypeId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/tasks/:taskId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/tasks/:taskId/approvals/:approvalId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/tasks/:taskId/checklist/:itemId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/:projectId/tasks/:taskId/comments/:commentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PATCH /api/projects/api-keys/:keyId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/projects/global-sprints/:globalSprintId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/projects/nav-folders/:navFolderId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/projects/webhooks/:webhookId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/queues/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/reopen-sla/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "reopen_sla",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/routing/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/sla/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "sla",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/sla/packages/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "packages",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/ticket-types/:type": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "ticket_types",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PATCH /api/tickets/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/tickets/:id/messages/:messageId": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/users/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "PATCH /api/users/me": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/users/me/password": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "PATCH /api/webhooks/endpoints/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/ai/guidance/tickets/:id/declined": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/ai/guidance/tickets/:id/link": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/ai/guidance/tickets/:id/not-duplicate": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/ai/guidance/tickets/:id/resolved": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/ai/intake/checklist": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/ai/intake/tickets/:id/dismiss": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/ai/feedback": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/ai/suggest": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "user",
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/ai/suggest/:interactionId/accept": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "user",
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/assistant/chat": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/auth/login": [],
+ "POST /api/auth/logout": [],
+ "POST /api/auth/refresh": [],
+ "POST /api/auth/teams": [],
+ "POST /api/auto-close/trigger": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "auto_close",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/categories": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/categories/sub": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/email-logs/blocks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/email-logs/settings/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "email_logs",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/escalation": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "escalation",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/inactivity/trigger": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "inactivity",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/integrations/keys": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/integrations/keys/:id/regenerate": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/integrations/v1/projects": [],
+ "POST /api/integrations/v1/projects/:projectId/attachments": [],
+ "POST /api/integrations/v1/projects/:projectId/custom-fields": [],
+ "POST /api/integrations/v1/projects/:projectId/documents": [],
+ "POST /api/integrations/v1/projects/:projectId/folders": [],
+ "POST /api/integrations/v1/projects/:projectId/lists": [],
+ "POST /api/integrations/v1/projects/:projectId/members": [],
+ "POST /api/integrations/v1/projects/:projectId/sprints": [],
+ "POST /api/integrations/v1/projects/:projectId/sprints/:sprintId/complete": [],
+ "POST /api/integrations/v1/projects/:projectId/sprints/:sprintId/start": [],
+ "POST /api/integrations/v1/projects/:projectId/statuses": [],
+ "POST /api/integrations/v1/projects/:projectId/tags": [],
+ "POST /api/integrations/v1/projects/:projectId/task-types": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/checklist": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/comments": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/complete": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/dependencies": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/documents/:documentId": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/tags/:tagId": [],
+ "POST /api/integrations/v1/projects/:projectId/tasks/:taskId/tickets": [],
+ "POST /api/integrations/v1/tickets": [],
+ "POST /api/integrations/v1/tickets/:id/attachments": [],
+ "POST /api/integrations/v1/tickets/:id/closure": [],
+ "POST /api/integrations/v1/tickets/:id/messages": [],
+ "POST /api/integrations/v1/users": [],
+ "POST /api/macros": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "macros",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/macros/render": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "POST /api/manager-links/orgs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/mcp-tokens": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/organizations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/organizations/:id/authorized-domains": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager",
+    "agent"
+   ]
+  }
+ ],
+ "POST /api/organizations/:id/queue-access": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "orgs",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/organizations/:id/served-by": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/projects": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/automations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/custom-fields": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/docs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/files": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/folders": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/lists": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/members": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/sprints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/sprints/:sprintId/complete": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/sprints/:sprintId/start": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/statuses": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tags": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/task-types": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/approvals": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/checklist": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/comments": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/complete": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/dependencies": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/documents/:documentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/relations": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/tags/:tagId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/tickets": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/tickets/bulk": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/:taskId/watchers": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/bulk": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/tasks/from-ticket": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/:projectId/views": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/api-keys": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/api-keys/:keyId/regenerate": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/global-sprints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/global-sprints/:globalSprintId/complete": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/global-sprints/:globalSprintId/start": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/import": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/import/preview": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/me/favorites": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/me/filters": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/projects/nav-folders": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/webhooks": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/webhooks/:webhookId/deliveries/:deliveryId/resend": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/webhooks/:webhookId/regenerate-secret": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/projects/webhooks/:webhookId/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_integrations",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/queues": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/queues/:id/agents": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "queues",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/routing": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/routing/reorder": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/routing/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "routing",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/sla": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "sla",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/sla/packages": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "packages",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/survey/public/:token": [],
+ "POST /api/survey/templates": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/survey/templates/:id/active": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/survey/templates/:id/questions": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/survey/templates/:id/questions/reorder": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/survey/tickets/:id/resend-email": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey_dashboard",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/teams/messages": [],
+ "POST /api/templates": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "POST /api/tickets": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "user",
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/tickets/:id/escalate": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/tickets/:id/escalation/revert": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/tickets/:id/join": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "agent"
+   ]
+  }
+ ],
+ "POST /api/tickets/:id/messages": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/tickets/:id/reopen": [
+  {
+   "kind": "auth"
+  }
+ ],
+ "POST /api/tickets/:id/restore": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "trash",
+   "roles": []
+  }
+ ],
+ "POST /api/users": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "users",
+   "roles": [
+    "admin",
+    "supervisor",
+    "agent",
+    "manager"
+   ]
+  }
+ ],
+ "POST /api/webhooks/deliveries/:id/retry": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/webhooks/endpoints": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/webhooks/endpoints/:id/regenerate-secret": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/webhooks/endpoints/:id/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "webhooks",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /auth/logout": [],
+ "POST /mcp": [],
+ "POST /mcp/chamados": [],
+ "PUT /api/ai/agents/:key/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/ai/agents/:key/mode": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/ai/intake/checklist/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/categories/:id/orgs": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "categories",
+   "roles": [
+    "admin",
+    "supervisor",
+    "manager"
+   ]
+  }
+ ],
+ "PUT /api/integrations/v1/projects/:projectId/tasks/:taskId/assignees": [],
+ "PUT /api/integrations/v1/projects/:projectId/tasks/:taskId/custom-fields/:customFieldId": [],
+ "PUT /api/my-tasks/columns": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PUT /api/projects/:projectId/nav-folder": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  },
+  {
+   "kind": "area",
+   "area": "projects_sprints",
+   "roles": [
+    "manager"
+   ]
+  }
+ ],
+ "PUT /api/projects/:projectId/tasks/:taskId/assignees": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PUT /api/projects/:projectId/tasks/:taskId/custom-fields/:customFieldId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "projects"
+  }
+ ],
+ "PUT /api/sla/:id/categories": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "packages",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/sla/:id/packages": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "packages",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/survey/questions/:questionId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/survey/templates/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "survey",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/tickets/trash/config": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": []
+  }
+ ],
+ "POST /api/knowledge": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/knowledge": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/knowledge/gaps": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/knowledge/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/knowledge/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/knowledge/:id/publish": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/knowledge/:id/unpublish": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/knowledge/:id": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/knowledge/import": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/system-config/public": [],
+ "PUT /api/system-config/appearance": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/system-config/appearance": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/system-config/sso": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/system-config/sso": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/system-config/sso": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/system-config/sso/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/system-config/ai": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "PUT /api/system-config/ai": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "DELETE /api/system-config/ai": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/system-config/ai/test": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/docs/access": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/spaces": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/spaces": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/spaces/:spaceId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "PATCH /api/docs/spaces/:spaceId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "DELETE /api/docs/spaces/:spaceId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/spaces/:spaceId/members": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "PUT /api/docs/spaces/:spaceId/members/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "DELETE /api/docs/spaces/:spaceId/members/:userId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/spaces/:spaceId/pages": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/spaces/:spaceId/pages": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/trash": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/search": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/recent": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/favorites": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/people": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/pages/:pageId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "PATCH /api/docs/pages/:pageId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "DELETE /api/docs/pages/:pageId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/move": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/duplicate": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/restore": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "DELETE /api/docs/pages/:pageId/permanent": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "PUT /api/docs/pages/:pageId/favorite": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "DELETE /api/docs/pages/:pageId/favorite": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/pages/:pageId/versions": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/versions": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/versions/:versionId/ydoc": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/versions/:versionId/restore": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "POST /api/docs/pages/:pageId/attachments": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/docs/attachments/:attachmentId": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "module",
+   "module": "documents"
+  }
+ ],
+ "GET /api/dashboard/shift": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/dashboard/portfolio": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "area",
+   "area": "dash_main",
+   "roles": [
+    "supervisor",
+    "manager",
+    "admin"
+   ]
+  }
+ ],
+ "GET /api/system-config/health": [
+  {
+   "kind": "auth"
+  },
+  {
+   "kind": "role",
+   "roles": [
+    "admin"
+   ]
+  }
+ ],
+ "POST /api/tickets/:id/confirm": [
+  {
+   "kind": "auth"
+  }
+ ]
+}
